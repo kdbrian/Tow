@@ -1,0 +1,162 @@
+{
+  "project_info": {
+    "project_number": "516163279876",
+    "project_id": "pseudo-e2290",
+    "storage_bucket": "pseudo-e2290.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:a94087455fa60330086951",
+        "android_client_info": {
+          "package_name": "com.jakeoils.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:beab17e6d7386067086951",
+        "android_client_info": {
+          "package_name": "com.kdbrian.fbauth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:8063a809299ee47b086951",
+        "android_client_info": {
+          "package_name": "com.kdbrian.fcmdemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:fa528ace0992124d086951",
+        "android_client_info": {
+          "package_name": "com.kdbrian.templated"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:b428b5155320c763086951",
+        "android_client_info": {
+          "package_name": "com.kdbrian.tow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:56cf552d18d9d9e3086951",
+        "android_client_info": {
+          "package_name": "com.vns.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:6eb8e0941f466f3c086951",
+        "android_client_info": {
+          "package_name": "com.vns.android.vnsvets"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516163279876:android:b1b4f2f8912fcfbe086951",
+        "android_client_info": {
+          "package_name": "io.github.kdbrian.pseudo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4WWyixo8-M7SvvUrcbcYTbNp0q3XID-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
