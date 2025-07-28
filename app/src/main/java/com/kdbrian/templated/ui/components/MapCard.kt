@@ -9,11 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -45,13 +43,13 @@ fun MapCard(
     locationText: String,
     searchRadius: String
 ) {
-    Surface (
+    Surface(
         modifier = modifier
             .fillMaxWidth()
             .padding(4.dp), // Padding around the card itself
         shape = RoundedCornerShape(32.dp),
         color = Color.White,
-        shadowElevation =4.dp
+        shadowElevation = 4.dp
     ) {
         Column(
             modifier = Modifier
@@ -104,7 +102,9 @@ fun MapCard(
             // Bottom Text/Buttons (as seen in the image - "200 Contacts", "12 Services")
             // This part is illustrative and can be expanded with actual buttons/logic
             Row(
-                modifier = Modifier.fillMaxWidth().padding(4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {

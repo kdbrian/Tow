@@ -43,7 +43,7 @@ fun EateriesSavedCard(
     foodItem: FoodItemData,
     modifier: Modifier = Modifier
 ) {
-    Surface (
+    Surface(
         modifier = modifier
             .fillMaxWidth()
             .height(90.dp),
@@ -142,7 +142,7 @@ fun FoodItemCardPreview() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        repeat(10){
+        repeat(10) {
             EateriesSavedCard(foodItem = sampleFoodItem)
         }
     }

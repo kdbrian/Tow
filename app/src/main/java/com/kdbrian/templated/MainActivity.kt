@@ -7,10 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.kdbrian.templated.ui.components.RestaurantCard
-import com.kdbrian.templated.domain.model.RestaurantData
 import com.kdbrian.templated.ui.screens.Landing
 import com.kdbrian.templated.ui.theme.TemplatedTheme
+import com.kdbrian.templated.ui.theme.appColor
 import com.kdbrian.templated.ui.theme.manRope
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +28,9 @@ class MainActivity : ComponentActivity() {
 
 val LocalFontFamily = staticCompositionLocalOf {
     manRope
+}
+val LocalAppColor = staticCompositionLocalOf {
+    appColor
 }
 
 @Composable

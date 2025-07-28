@@ -20,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.kdbrian.templated.App
+import com.kdbrian.templated.LocalAppColor
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,22 +30,28 @@ fun MyVehicles(
 ) {
 
     Scaffold(
-        topBar = {
+        containerColor = LocalAppColor.current,
+
+                topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = buildAnnotatedString {
-                            withStyle(SpanStyle(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )){
+                            withStyle(
+                                SpanStyle(
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            ) {
                                 append("My Vehicles")
                             }
                             append("\n")
-                            withStyle(SpanStyle(
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight(60)
-                            )){
+                            withStyle(
+                                SpanStyle(
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight(60)
+                                )
+                            ) {
                                 append("saved 30 vehicles.")
                             }
                         }

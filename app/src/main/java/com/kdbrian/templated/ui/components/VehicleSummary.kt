@@ -16,8 +16,6 @@ import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.EvStation
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Speed
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -48,7 +46,7 @@ import com.kdbrian.templated.domain.model.Vehicle
 fun VehicleSummary(
     modifier: Modifier = Modifier,
     vehicle: Vehicle,
-    shape : Shape = RoundedCornerShape(24.dp)
+    shape: Shape = RoundedCornerShape(24.dp)
 ) {
     Surface(
         modifier = modifier
