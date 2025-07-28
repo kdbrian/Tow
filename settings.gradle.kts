@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Templated"
+rootProject.name = "Tow"
 include(":app")
