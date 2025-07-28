@@ -4,6 +4,9 @@ package com.kdbrian.templated.util
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Extension function on [Context] to get the display name of a file from its [Uri].
@@ -36,3 +39,16 @@ fun Context.getFileName(uri: Uri): String? {
     }
     return result
 }
+
+/**
+ * Formats a given long timestamp into a date string in the format "WED, Aug 25 2024".
+ *
+ * @param timestamp The timestamp in milliseconds.
+ * @return The formatted date string.
+ */
+fun formatDateFromLong(timestamp: Long): String {
+    val date = Date(timestamp)
+    val formatter = SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault())
+    return formatter.format(date)
+}
+

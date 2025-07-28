@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Tow</string>
+
+    <string-array name="vehicle_types">
+        <item>Fuel</item>
+        <item>Electric(EV)</item>
+    </string-array>
 </resources>

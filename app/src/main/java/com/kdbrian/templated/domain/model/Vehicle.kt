@@ -1,5 +1,7 @@
 package com.kdbrian.templated.domain.model
 
+import kotlinx.serialization.Serializable
+
 /**
  * Data class to represent a typical vehicle, including fields for both ICE and EV.
  *
@@ -9,10 +11,13 @@ package com.kdbrian.templated.domain.model
  * @param fuelTankCapacity The fuel tank capacity in liters (for ICE vehicles). Nullable for EVs.
  * @param batteryCapacityKWh The battery capacity in kWh (for EV vehicles). Nullable for ICE vehicles.
  */
+@Serializable
 data class Vehicle(
     val plateNumber: String,
     val model: String,
-    val mileage: Int, // Assuming mileage is an integer
-    val fuelTankCapacity: Double? = null, // Nullable for EVs
-    val batteryCapacityKWh: Double? = null // Nullable for ICE vehicles
+    val mileage: Int,
+    val fuelTankCapacity: Double? = null,
+    val batteryCapacityKWh: Double? = null,
+    val lastServiced: Long? = null,
+    val lastUpdated: Long = System.currentTimeMillis()
 )
