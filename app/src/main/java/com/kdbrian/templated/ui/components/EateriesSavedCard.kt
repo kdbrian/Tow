@@ -29,13 +29,13 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.kdbrian.templated.LocalFontFamily
 import com.kdbrian.templated.R
-import com.kdbrian.templated.domain.FoodItemData
+import com.kdbrian.templated.domain.model.FoodItemData
 
 
 /**
  * A composable card to display a food item with its image, title, subtitle, and price.
  *
- * @param foodItem The [com.kdbrian.templated.domain.FoodItemData] containing all the information for the food item.
+ * @param foodItem The [FoodItemData] containing all the information for the food item.
  * @param modifier Optional [Modifier] for this composable.
  */
 @Composable

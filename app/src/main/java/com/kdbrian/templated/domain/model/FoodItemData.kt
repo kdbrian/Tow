@@ -1,4 +1,4 @@
-package com.kdbrian.templated.domain
+package com.kdbrian.templated.domain.model
 
 /**
  * Data class to represent the details of a food item.

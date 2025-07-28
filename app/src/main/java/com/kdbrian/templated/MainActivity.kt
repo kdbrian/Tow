@@ -9,6 +9,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.kdbrian.templated.ui.components.RestaurantCard
 import com.kdbrian.templated.domain.model.RestaurantData
+import com.kdbrian.templated.ui.screens.Landing
 import com.kdbrian.templated.ui.theme.TemplatedTheme
 import com.kdbrian.templated.ui.theme.manRope
 
@@ -18,14 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             App {
-                RestaurantCard(
-                    restaurant = RestaurantData(
-                        imageUrl = "",
-                        name = "Kentucky Fried Chicken(KFC)",
-                        nearestDistance = "Nearest 21KM",
-                        branchesCount = "Over 30 branches"
-                    )
-                )
+                Landing()
             }
 
         }

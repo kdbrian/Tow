@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,15 +41,16 @@ import com.kdbrian.templated.LocalFontFamily
  */
 @Composable
 fun CustomArrowButton(
-    text: String,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    text: String,
+    icon: ImageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
     showArrowIcon: Boolean = true,
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = Color.White,
         contentColor = Color.Black
     ),
-    buttonShape: RoundedCornerShape = RoundedCornerShape(16.dp)
+    buttonShape: RoundedCornerShape = RoundedCornerShape(16.dp),
+    onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
@@ -74,7 +76,7 @@ fun CustomArrowButton(
             )
             if (showArrowIcon) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                    imageVector = icon,
                     contentDescription = null, // Decorative icon
                     tint = buttonColors.contentColor // Use content color for the icon
                 )

@@ -64,6 +64,7 @@ fun TowCustomInputField(
         unfocusedIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.Transparent,
     ),
+    enabled: Boolean = true,
     isSingleLine: Boolean = true
 ) {
     TextField(
@@ -86,6 +87,7 @@ fun TowCustomInputField(
             .fillMaxWidth()
 //            .height(50.dp)
         ,
+        enabled = enabled,
         shape = fieldShape,
         colors = fieldColors,
         singleLine = isSingleLine

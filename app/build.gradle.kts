@@ -17,6 +17,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     alias(libs.plugins.google.gms.google.services)
+    kotlin("plugin.serialization") version "2.2.0"
+
 }
 
 android {
@@ -68,6 +70,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -117,6 +120,12 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
 
     implementation(libs.coil.compose)
-//    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.network.okhttp)
+
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.constraintlayout.compose)
+
+    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
 
 }
