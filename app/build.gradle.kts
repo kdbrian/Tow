@@ -126,6 +126,8 @@ dependencies {
 
     implementation(libs.androidx.constraintlayout.compose)
 
-    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
+    implementation(libs.accompanist.permissions)
+    implementation(libs.androidx.navigation.compose)
+
 
 }

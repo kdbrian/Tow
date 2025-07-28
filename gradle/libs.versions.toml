@@ -1,4 +1,5 @@
 [versions]
+accompanistPermissions = "0.37.3"
 agp = "8.10.1"
 coilCompose = "3.3.0"
 coilNetworkOkhttp = "3.3.0"
@@ -16,6 +17,7 @@ composeBom = "2024.09.00"
 junitJupiter = "5.8.1"
 junitJunit = "4.12"
 materialIconsExtended = "1.7.8"
+navigationCompose = "2.9.2"
 timber = "5.0.1"
 googleGmsGoogleServices = "4.4.3"
 firebaseAuth = "24.0.0"
@@ -26,9 +28,11 @@ firebaseFirestore = "26.0.0"
 
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilNetworkOkhttp" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
