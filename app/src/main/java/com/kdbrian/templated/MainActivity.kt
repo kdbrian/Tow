@@ -4,15 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.kdbrian.templated.ui.components.RestaurantCard
+import com.kdbrian.templated.domain.model.RestaurantData
 import com.kdbrian.templated.ui.theme.TemplatedTheme
 import com.kdbrian.templated.ui.theme.manRope
 
@@ -21,7 +17,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            App {  }
+            App {
+                RestaurantCard(
+                    restaurant = RestaurantData(
+                        imageUrl = "",
+                        name = "Kentucky Fried Chicken(KFC)",
+                        nearestDistance = "Nearest 21KM",
+                        branchesCount = "Over 30 branches"
+                    )
+                )
+            }
+
         }
     }
 }
