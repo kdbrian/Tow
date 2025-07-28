@@ -31,7 +31,6 @@ import com.kdbrian.templated.LocalFontFamily
 import com.kdbrian.templated.R
 import com.kdbrian.templated.domain.model.FoodItemData
 
-
 /**
  * A composable card to display a food item with its image, title, subtitle, and price.
  *
@@ -40,8 +39,8 @@ import com.kdbrian.templated.domain.model.FoodItemData
  */
 @Composable
 fun EateriesSavedCard(
-    foodItem: FoodItemData,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    foodItem: FoodItemData
 ) {
     Surface(
         modifier = modifier
@@ -123,6 +122,7 @@ fun EateriesSavedCard(
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

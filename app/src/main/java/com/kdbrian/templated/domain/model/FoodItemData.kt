@@ -15,4 +15,21 @@ data class FoodItemData(
     val subtitle: String,
     val price: String,
     val currency: String = "Kes"
-)
+) {
+    companion object {
+        val demoFoodItems = listOf(
+            FoodItemData(
+                imageUrl = "https://placehold.co/100x100/FF0000/FFFFFF/png?text=KFC", // Placeholder for KFC drumsticks
+                title = "Tripple Drumsticks",
+                subtitle = "Served by KFC",
+                price = "3,000"
+            ),
+            FoodItemData(
+                imageUrl = "https://placehold.co/100x100/FF0000/FFFFFF/png?text=KFC", // Placeholder for KFC drumsticks
+                title = "Tripple Drumsticks",
+                subtitle = "Served by KFC",
+                price = "3,000"
+            ),
+        )
+    }
+}

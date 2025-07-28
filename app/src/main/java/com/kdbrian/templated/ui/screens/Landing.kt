@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -46,116 +48,96 @@ fun Landing() {
     Scaffold(
         containerColor = LocalAppColor.current
     ) { pd ->
-        LazyColumn(
+        val scrollState = rememberScrollState()
+
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(pd)
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(192.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = LoremIpsum(2).values.joinToString(),
-                            style = MaterialTheme.typography.displaySmall.copy(
-                                fontFamily = LocalFontFamily.current,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 48.sp
-                            )
-                        )
-
-                        Text(
-                            text = LoremIpsum(8).values.joinToString(),
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontFamily = LocalFontFamily.current,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight(40)
-                            )
-                        )
-                    }
-
-                    Surface(
-                        shape = CircleShape,
-                        border = BorderStroke(
-                            width = 4.dp,
-                            brush = Brush.linearGradient(
-                                colors = listOf(
-                                    Color(0xFFF3D9B1),
-                                    Color(0xFFF27059),
-                                )
-                            )
-                        ),
-                        shadowElevation = (-3).dp
-                    ) {
-                        Box(
-                            modifier = Modifier.size(50.dp)
-                        ) {
-                            AsyncImage(
-                                model = null,
-                                placeholder = painterResource(R.drawable.cars),
-                                modifier = Modifier.fillMaxSize(),
-                                contentDescription = null,
-                                contentScale = ContentScale.Fit,
-                            )
-                        }
-                    }
-                }
-
-            }
-
-            item { Spacer(Modifier.padding(12.dp)) }
-
-            item {
-                ServiceCard {
-
-                }
-            }
-
-            item { Spacer(Modifier.padding(12.dp)) }
-
-            item {
-                MapCard(
-                    mapImagePainter = painterResource(R.drawable.geographical_map),
-                    locationText = LoremIpsum(2).values.joinToString(),
-                    searchRadius = 3.toString()
-                )
-            }
-
-            item { Spacer(Modifier.padding(9.dp)) }
-
-            item {
-
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    CustomArrowButton(
-                        text = "Request history",
-                    ) {}
+                    Text(
+                        text = "Good day",
+                        style = MaterialTheme.typography.displaySmall.copy(
+                            fontFamily = LocalFontFamily.current,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 48.sp
+                        )
+                    )
 
-                    CustomArrowButton(text = "My Cars") {}
+                    Text(
+                        text = "Service, drinks & food at your comfort.",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontFamily = LocalFontFamily.current,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight(40)
+                        )
+                    )
                 }
 
+                Surface(
+                    shape = CircleShape,
+                    border = BorderStroke(
+                        width = 4.dp,
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Color(0xFFF3D9B1),
+                                Color(0xFFF27059),
+                            )
+                        )
+                    ),
+                    shadowElevation = (-3).dp
+                ) {
+                    Box(
+                        modifier = Modifier.size(50.dp)
+                    ) {
+                        AsyncImage(
+                            model = null,
+                            placeholder = painterResource(R.drawable.cars),
+                            modifier = Modifier.fillMaxSize(),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+                        )
+                    }
+                }
             }
 
-            item { Spacer(Modifier.padding(9.dp)) }
+            ServiceCard {
 
-            item {
-                ServiceCard(
-                    title = "Eateries",
-                    supportText = "Find the best eateries near you.",
-                    backgroundImagePainter = painterResource(R.drawable.fast_foods),
+            }
+
+            MapCard(
+                mapImagePainter = painterResource(R.drawable.geographical_map),
+                locationText = LoremIpsum(2).values.joinToString(),
+                searchRadius = 3.toString()
+            )
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                CustomArrowButton(
+                    text = "Request history",
                 ) {}
+
+                CustomArrowButton(text = "My Cars") {}
             }
 
+            ServiceCard(
+                title = "Eateries",
+                supportText = "Find the best eateries near you.",
+                backgroundImagePainter = painterResource(R.drawable.fast_foods),
+            ) {}
 
         }
     }
