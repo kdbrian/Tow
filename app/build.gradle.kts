@@ -22,11 +22,11 @@ plugins {
 }
 
 android {
-    namespace = "com.kdbrian.templated"
+    namespace = "com.kdbrian.tow"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.kdbrian.templated"
+        applicationId = "com.kdbrian.tow"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
