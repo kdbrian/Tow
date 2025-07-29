@@ -1,4 +1,4 @@
-package com.kdbrian.templated.ui.screens
+package com.kdbrian.templated.presentation.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
 import com.kdbrian.templated.App
 import com.kdbrian.templated.BuildConfig
 import com.kdbrian.templated.LocalAppColor
@@ -34,12 +37,17 @@ import com.kdbrian.templated.LocalFontFamily
 import com.kdbrian.templated.R
 import com.kdbrian.templated.ui.components.ActionCard
 import com.kdbrian.templated.ui.components.ServiceCard
+import org.koin.compose.koinInject
 
 @Composable
-fun Profile() {
+fun Profile(
+    navHostController: NavHostController = rememberNavController()
+) {
+    val firebaseAuth = koinInject<FirebaseAuth>()
+
+
     Scaffold(
         containerColor = LocalAppColor.current
-
     ) { pd ->
 
         val scrollState = rememberScrollState()
@@ -53,6 +61,7 @@ fun Profile() {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Text(
                 text = "Profile",
                 style = MaterialTheme.typography.displayMedium.copy(
@@ -76,7 +85,7 @@ fun Profile() {
             }
 
             ActionCard(
-                title = "Joedoe@outlook.com\n",
+                title = "${firebaseAuth.currentUser?.email}\n",
                 subtitle = "Account age 1yr 2mo",
                 trailingIcon = Icons.AutoMirrored.Rounded.Logout
             ) { }

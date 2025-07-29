@@ -5,4 +5,6 @@
         <item>Fuel</item>
         <item>Electric(EV)</item>
     </string-array>
+
+    <string name="web_client_id">516163279876-pe6e96hf45p5u6lougpqlsmv654st0ec.apps.googleusercontent.com</string>
 </resources>

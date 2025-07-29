@@ -63,7 +63,7 @@ fun VehicleItem(
                             withStyle(SpanStyle(fontSize = 16.sp)) {
                                 append("last serviced ")
                                 withStyle(SpanStyle(fontSize = 14.sp)) {
-                                    append(formatDateFromLong(it))
+                                    append(formatDateFromLong(timestamp = it))
                                 }
                             }
                         }
@@ -75,7 +75,7 @@ fun VehicleItem(
                         withStyle(SpanStyle(fontSize = 16.sp)) {
                             append("last updated ")
                             withStyle(SpanStyle(fontSize = 14.sp)) {
-                                append(formatDateFromLong(vehicle.lastUpdated))
+                                append(formatDateFromLong(timestamp = vehicle.lastUpdated))
                             }
                         }
                     },

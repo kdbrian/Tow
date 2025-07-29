@@ -129,5 +129,8 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.play.services.auth)
+
+    implementation(libs.play.services.location)
 
 }

@@ -1,11 +1,11 @@
-package com.kdbrian.templated.ui.screens
+package com.kdbrian.templated.presentation.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -18,20 +18,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.kdbrian.templated.App
+import com.kdbrian.templated.LocalAppColor
 import com.kdbrian.templated.LocalFontFamily
 import com.kdbrian.templated.R
 import com.kdbrian.templated.domain.model.FoodItemData
@@ -40,14 +39,22 @@ import com.kdbrian.templated.ui.components.EateriesSavedCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Eateries() {
+fun Eateries(
+    navHostController: NavHostController = rememberNavController()
+) {
 
     Scaffold(
+        containerColor = LocalAppColor.current,
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = LocalAppColor.current,
+                    titleContentColor = Color.Black,
+                    navigationIconContentColor = Color.Black
+                ),
                 title = {},
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {navHostController.popBackStack()}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = null

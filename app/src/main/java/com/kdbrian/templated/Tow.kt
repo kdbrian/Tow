@@ -1,6 +1,7 @@
 package com.kdbrian.templated
 
 import android.app.Application
+import com.kdbrian.templated.presentation.di.firebaseModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -20,7 +21,7 @@ class Tow : Application() {
             androidLogger()
 
             modules(
-
+                firebaseModules,
             )
         }
     }

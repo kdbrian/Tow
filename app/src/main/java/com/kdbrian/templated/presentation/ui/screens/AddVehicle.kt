@@ -1,5 +1,7 @@
-package com.kdbrian.templated.ui.screens
+package com.kdbrian.templated.presentation.ui.screens
 
+import android.location.Location
+import androidx.collection.mutableDoubleListOf
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +34,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -52,18 +56,25 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.kdbrian.templated.App
 import com.kdbrian.templated.LocalAppColor
 import com.kdbrian.templated.LocalFontFamily
 import com.kdbrian.templated.R
 import com.kdbrian.templated.ui.components.CustomArrowButton
 import com.kdbrian.templated.ui.components.TowCustomInputField
+import com.kdbrian.templated.util.getLocationName
+import timber.log.Timber
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun AddVehicle(
+    navHostController: NavHostController = rememberNavController()
 ) {
     var isVehicleTypesVisible by remember { mutableStateOf(false) }
     val icon by remember {
@@ -76,8 +87,39 @@ fun AddVehicle(
     }
 
     val vehicleTypes = stringArrayResource(R.array.vehicle_types)
+    val context = LocalContext.current
     var selectedType by remember {
         mutableIntStateOf(0)
+    }
+    val latLon = remember { mutableDoubleListOf() }
+    var useCurrentLocation by remember { mutableStateOf(false) }
+    val fusedLocationClient: FusedLocationProviderClient = remember {
+        LocationServices.getFusedLocationProviderClient(context)
+    }
+
+    LaunchedEffect(useCurrentLocation) {
+        if (useCurrentLocation) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    location?.let {
+                        it.latitude.let { lat -> latLon.add(0, lat) }
+                        it.longitude.let { lon -> latLon.add(1, lon) }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    // Handle failure to get location
+                    Timber.d("Failed to get last location: ${e.message}")
+                }
+        }
+    }
+
+    val locationName by remember {
+        derivedStateOf {
+            if (useCurrentLocation && latLon.isNotEmpty()) {
+                context.getLocationName(latLon[0], latLon[1])
+            } else
+                ""
+        }
     }
 
 
@@ -94,10 +136,15 @@ fun AddVehicle(
         containerColor = LocalAppColor.current,
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = LocalAppColor.current,
+                    titleContentColor = Color.Black,
+                    navigationIconContentColor = Color.Black
+                ),
                 title = {
                     Column {
                         Text(
-                            text = "Request Service",
+                            text = "Register Vehicle",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = LocalFontFamily.current
@@ -119,7 +166,7 @@ fun AddVehicle(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = null
@@ -246,6 +293,7 @@ fun AddVehicle(
                     )
 
                     Surface(
+                        color = Color.Transparent,
                         onClick = {
                             useMine = !useMine
                         }
@@ -266,7 +314,7 @@ fun AddVehicle(
                                     append("Use current location ")
                                 }
                                 append("\n")
-                                append("")
+                                append(if (useMine) locationName else "")
                             })
 
                             Icon(
@@ -373,6 +421,7 @@ fun AddVehicle(
     }
 
 }
+
 
 @Preview
 @Composable

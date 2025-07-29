@@ -20,4 +20,13 @@ data class Vehicle(
     val batteryCapacityKWh: Double? = null,
     val lastServiced: Long? = null,
     val lastUpdated: Long = System.currentTimeMillis()
-)
+) {
+    companion object {
+        val dreamCar = Vehicle(
+            model = "Koinsegg",
+            plateNumber = "ERT 321",
+            mileage = 800,
+        )
+
+    }
+}

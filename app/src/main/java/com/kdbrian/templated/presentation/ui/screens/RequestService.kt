@@ -1,4 +1,4 @@
-package com.kdbrian.templated.ui.screens
+package com.kdbrian.templated.presentation.ui.screens
 
 import android.Manifest
 import android.net.Uri
@@ -44,6 +44,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -68,6 +69,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -86,6 +89,7 @@ import com.kdbrian.templated.util.getFileName
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun RequestService(
+    navHostController: NavHostController = rememberNavController()
 ) {
 
 
@@ -133,6 +137,11 @@ fun RequestService(
         containerColor = LocalAppColor.current,
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = LocalAppColor.current,
+                    titleContentColor = Color.Black,
+                    navigationIconContentColor = Color.Black,
+                ),
                 title = {
                     Column {
                         Text(
@@ -158,7 +167,9 @@ fun RequestService(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        navHostController.popBackStack()
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = null
@@ -299,6 +310,7 @@ fun RequestService(
                     )
 
                     Surface(
+                        color = Color.Transparent,
                         onClick = {
                             useMine = !useMine
                         }
@@ -403,6 +415,7 @@ fun RequestService(
             item {
 
                 Surface(
+                    color = Color.Transparent,
                     shape = RoundedCornerShape(4.dp),
                     onClick = {
 
@@ -510,7 +523,9 @@ fun RequestService(
 
         ModalBottomSheet(
             onDismissRequest = { isOptionsVisible = false },
-            sheetState = bottomSheetState
+            sheetState = bottomSheetState,
+            containerColor = LocalAppColor.current,
+            contentColor = Color.Black
         ) {
             Column(
                 modifier = Modifier.padding(8.dp)
@@ -531,7 +546,8 @@ fun RequestService(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(150.dp)
-                        .background(color = Color(0xFFFF0101))
+                        .padding(12.dp)
+                        .background(color = Color(0xFFFF0101), shape = RoundedCornerShape(24.dp))
                         .background(
                             brush = Brush.linearGradient(
                                 colors = listOf(
@@ -559,7 +575,7 @@ fun RequestService(
                         contentDescription = null,
                         modifier = Modifier
                             .size(100.dp)
-                            .align(Alignment.TopEnd)
+                            .align(Alignment.TopStart)
                     )
                 }
 

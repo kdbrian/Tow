@@ -1,5 +1,6 @@
 package com.kdbrian.templated
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,19 +8,28 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.kdbrian.templated.ui.screens.Landing
+import androidx.core.view.WindowCompat
+import com.kdbrian.templated.presentation.nav.MainNav
 import com.kdbrian.templated.ui.theme.TemplatedTheme
-import com.kdbrian.templated.ui.theme.appColor
+import com.kdbrian.templated.presentation.ui.theme.appColor
 import com.kdbrian.templated.ui.theme.manRope
+import org.koin.dsl.koinApplication
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            App {
 
-                Landing()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            enableEdgeToEdge()
+        } else {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+        }
+
+        koinApplication {
+            setContent {
+                App {
+                    MainNav()
+                }
             }
 
         }

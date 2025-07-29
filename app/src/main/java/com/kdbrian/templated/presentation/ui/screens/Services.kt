@@ -1,4 +1,4 @@
-package com.kdbrian.templated.ui.screens
+package com.kdbrian.templated.presentation.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,6 +31,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.kdbrian.templated.App
 import com.kdbrian.templated.LocalAppColor
 import com.kdbrian.templated.LocalFontFamily
@@ -40,7 +42,7 @@ import com.kdbrian.templated.ui.components.TowCustomInputField
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Services(
-
+    navHostController: NavHostController = rememberNavController()
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -78,7 +80,7 @@ fun Services(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {navHostController.popBackStack()}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = null

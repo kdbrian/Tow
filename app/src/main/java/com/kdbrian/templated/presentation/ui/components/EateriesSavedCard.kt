@@ -46,6 +46,7 @@ fun EateriesSavedCard(
         modifier = modifier
             .fillMaxWidth()
             .height(90.dp),
+        color = Color.Transparent,
         shape = RoundedCornerShape(16.dp),
     ) {
         Row(
