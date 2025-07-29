@@ -59,6 +59,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.kdbrian.templated.App
@@ -97,11 +101,20 @@ fun AddVehicle(
         LocationServices.getFusedLocationProviderClient(context)
     }
 
+    val permissionsState = rememberPermissionState(
+//        listOf(
+//            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+//        )
+    )
+
     LaunchedEffect(useCurrentLocation) {
-        if (useCurrentLocation) {
+        Timber.d("reached")
+        if (permissionsState.status.isGranted) {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
                     location?.let {
+                        Timber.d("at $it")
                         it.latitude.let { lat -> latLon.add(0, lat) }
                         it.longitude.let { lon -> latLon.add(1, lon) }
                     }
@@ -110,18 +123,25 @@ fun AddVehicle(
                     // Handle failure to get location
                     Timber.d("Failed to get last location: ${e.message}")
                 }
+        } else {
+            useCurrentLocation = false
+            permissionsState.launchPermissionRequest()
+
         }
     }
 
     val locationName by remember {
         derivedStateOf {
-            if (useCurrentLocation && latLon.isNotEmpty()) {
-                context.getLocationName(latLon[0], latLon[1])
-            } else
-                ""
+            if (permissionsState.status.shouldShowRationale) {
+                "grant location permission access"
+            } else {
+                if (useCurrentLocation && latLon.isNotEmpty()) {
+                    context.getLocationName(latLon[0], latLon[1])
+                } else
+                    ""
+            }
         }
     }
-
 
     var isOptionsVisible by remember { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
@@ -150,19 +170,6 @@ fun AddVehicle(
                             fontFamily = LocalFontFamily.current
                         )
 
-                        Text(
-                            text = buildAnnotatedString {
-                                withStyle(SpanStyle(fontSize = 16.sp)) {
-                                    append("Estimated Feedback Time ")
-                                }
-
-                                withStyle(SpanStyle(fontSize = 8.sp, color = Color.Green)) {
-                                    append("38mins")
-                                }
-                            },
-                            fontWeight = FontWeight(50),
-                            fontFamily = LocalFontFamily.current
-                        )
                     }
                 },
                 navigationIcon = {
