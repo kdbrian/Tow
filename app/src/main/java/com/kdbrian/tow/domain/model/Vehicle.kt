@@ -14,10 +14,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Vehicle(
-    val plateNumber: String,
-    val model: String,
+    val model: String = "",
     @SerialName("basemodel") val baseModel: String = "",
-    val mileage: Int,
+    val mileage: Int=0,
     val fuelTankCapacity: Double? = null,
     val batteryCapacityKWh: Double? = null,
     val lastServiced: Long? = null,
@@ -26,7 +25,6 @@ data class Vehicle(
     companion object {
         val dreamCar = Vehicle(
             model = "Koinsegg",
-            plateNumber = "ERT 321",
             mileage = 800,
         )
 

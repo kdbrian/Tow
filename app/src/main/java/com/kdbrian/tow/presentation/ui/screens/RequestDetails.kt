@@ -33,6 +33,7 @@ import com.kdbrian.tow.LocalAppColor
 import com.kdbrian.tow.LocalFontFamily
 import com.kdbrian.tow.R
 import com.kdbrian.tow.domain.model.Vehicle
+import com.kdbrian.tow.domain.model.VehicleDto
 import com.kdbrian.tow.presentation.ui.components.ServiceCard
 import com.kdbrian.tow.presentation.ui.components.VehicleSummary
 
@@ -101,7 +102,7 @@ fun RequestDetails(
         ) {
 
             VehicleSummary(
-                vehicle = Vehicle.dreamCar
+                vehicle = VehicleDto(vehicle = Vehicle.dreamCar,plateNumber = null)
             )
 
             ServiceCard(

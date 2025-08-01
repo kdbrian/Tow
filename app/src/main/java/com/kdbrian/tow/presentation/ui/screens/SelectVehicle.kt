@@ -1,10 +1,8 @@
 package com.kdbrian.tow.presentation.ui.screens
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Check
@@ -13,15 +11,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -36,32 +32,20 @@ import com.kdbrian.tow.App
 import com.kdbrian.tow.LocalAppColor
 import com.kdbrian.tow.LocalFontFamily
 import com.kdbrian.tow.data.local.datastore.VehicleDataStore
-import com.kdbrian.tow.domain.model.VehicleDto
 import com.kdbrian.tow.presentation.ui.components.TowCustomInputField
-import com.kdbrian.tow.presentation.ui.components.VehicleItem
-import com.kdbrian.tow.presentation.ui.state.SelectVehicleScreenModel
-import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
-import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun SelectVehicle(
     navHostController: NavHostController = rememberNavController(),
-    selectVehicleScreenModel: SelectVehicleScreenModel = koinViewModel()
 ) {
-
-    val uiState by selectVehicleScreenModel.state.collectAsState()
     val context = LocalContext.current
     val vehicleDataStore = koinInject<VehicleDataStore>()
-    val savedVehicles by vehicleDataStore.loadVehicles(context)
-        .collectAsState(initial = emptyList())
-    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(Unit) {
-        selectVehicleScreenModel.loadModels()
-    }
+
 
     Scaffold(
         containerColor = LocalAppColor.current,
@@ -73,89 +57,44 @@ fun SelectVehicle(
                     navigationIconContentColor = Color.Black
                 ),
                 title = {
-                    Column {
-                        Text(
-                            text = "Select Vehicle",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            fontFamily = LocalFontFamily.current
-                        )
-                    }
+                    Text(
+                        "Select Vehicle",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = LocalFontFamily.current
+                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = { navHostController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = null
-                        )
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
                     }
                 },
                 actions = {
                     IconButton(onClick = { navHostController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Check,
-                            contentDescription = null
-                        )
+                        Icon(Icons.Rounded.Check, contentDescription = null)
                     }
                 }
             )
-        }
-    ) { pd ->
-        val scrollState = rememberScrollState()
-        Column(
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { paddingValues ->
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(pd)
+                .padding(paddingValues)
                 .padding(12.dp)
-                .verticalScroll(scrollState)
         ) {
-
-            TowCustomInputField(
-                value = uiState.query,
-                modifier = Modifier.padding(12.dp),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Rounded.Search,
-                        contentDescription = null
-                    )
-                }
-            )
-
-
-            uiState.models?.let { vehicles ->
-                val vehicleDtos = vehicles.map {
-                    VehicleDto(
-                        vehicle = it,
-                        isSaved = savedVehicles.contains(it)
-                    )
-                }
-
-                vehicleDtos.forEachIndexed { index, dto ->
-                    key(index) {
-                        VehicleItem(
-                            vehicleDto = dto,
-                            onSaved = { model ->
-                                coroutineScope.launch {
-                                    if (savedVehicles.any { it.model == model }) {
-                                        vehicleDataStore.removeVehicleByModel(model)
-                                    } else {
-                                        vehicleDataStore.addVehicle(dto.vehicle)
-                                    }
-                                }
-                            },
-                            onSelect = {
-                                selectVehicleScreenModel.setSelected(dto.vehicle)
-                            }
-                        )
+            item {
+                TowCustomInputField(
+                    modifier = Modifier.padding(12.dp),
+                    leadingIcon = {
+                        Icon(Icons.Rounded.Search, contentDescription = null)
                     }
-                }
-
-
+                )
             }
 
         }
     }
-
 }
 
 

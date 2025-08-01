@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 
-typealias UiState<T> = MutableStateFlow<T>
+typealias UiState<T> = MutableStateFlow<Resource<T>>
 
 abstract class ScreenModel<T> : ViewModel() {
     abstract val mutablestate: UiState<T>

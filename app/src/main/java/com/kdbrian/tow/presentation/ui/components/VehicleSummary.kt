@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kdbrian.tow.LocalFontFamily
 import com.kdbrian.tow.domain.model.Vehicle
+import com.kdbrian.tow.domain.model.VehicleDto
 
 /**
  * Composable to display a summary card for a vehicle.
@@ -45,7 +46,7 @@ import com.kdbrian.tow.domain.model.Vehicle
 @Composable
 fun VehicleSummary(
     modifier: Modifier = Modifier,
-    vehicle: Vehicle,
+    vehicle: VehicleDto,
     shape: Shape = RoundedCornerShape(24.dp)
 ) {
     Surface(
@@ -75,7 +76,7 @@ fun VehicleSummary(
             SummaryDetailRow(
                 icon = Icons.Default.DirectionsCar,
                 label = "Model",
-                value = vehicle.model
+                value = vehicle.vehicle.model
             )
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -83,7 +84,7 @@ fun VehicleSummary(
             SummaryDetailRow(
                 icon = Icons.Default.DirectionsCar, // Reusing car icon, could be a plate icon
                 label = "Plate Number",
-                value = vehicle.plateNumber
+                value = vehicle.plateNumber ?: ""
             )
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -91,22 +92,22 @@ fun VehicleSummary(
             SummaryDetailRow(
                 icon = Icons.Default.Speed,
                 label = "Mileage",
-                value = "${vehicle.mileage} KM" // Assuming KM, adjust as needed
+                value = "${vehicle.vehicle.mileage} KM" // Assuming KM, adjust as needed
             )
             Spacer(modifier = Modifier.height(12.dp))
 
             // Display Fuel Tank Capacity or Battery Capacity
-            if (vehicle.fuelTankCapacity != null) {
+            if (vehicle.vehicle.fuelTankCapacity != null) {
                 SummaryDetailRow(
                     icon = Icons.Default.LocalGasStation,
                     label = "Fuel Capacity",
-                    value = "${vehicle.fuelTankCapacity} Liters"
+                    value = "${vehicle.vehicle.fuelTankCapacity} Liters"
                 )
-            } else if (vehicle.batteryCapacityKWh != null) {
+            } else if (vehicle.vehicle.batteryCapacityKWh != null) {
                 SummaryDetailRow(
                     icon = Icons.Default.EvStation,
                     label = "Battery Capacity",
-                    value = "${vehicle.batteryCapacityKWh} kWh"
+                    value = "${vehicle.vehicle.batteryCapacityKWh} kWh"
                 )
             }
         }
@@ -166,19 +167,23 @@ private fun SummaryDetailRow(
 @Composable
 fun VehicleSummaryPreview() {
     // Example ICE Vehicle
-    val iceVehicle = Vehicle(
+    val iceVehicle = VehicleDto(
         plateNumber = "ABC-123",
-        model = "Toyota Camry",
-        mileage = 55000,
-        fuelTankCapacity = 60.0
+        vehicle = Vehicle(
+            model = "Toyota Camry",
+            mileage = 55000,
+            fuelTankCapacity = 60.0
+        )
     )
 
     // Example EV Vehicle
-    val evVehicle = Vehicle(
+    val evVehicle = VehicleDto(
         plateNumber = "EV-456",
-        model = "Tesla Model 3",
-        mileage = 25000,
-        batteryCapacityKWh = 75.0
+        vehicle = Vehicle(
+            model = "Tesla Model 3",
+            mileage = 25000,
+            batteryCapacityKWh = 75.0
+        )
     )
 
     Column(

@@ -6,9 +6,8 @@ import kotlinx.serialization.Serializable
 import org.koin.core.logger.MESSAGE
 
 //@Serializable
-data class SelectVehicleState(
-    val message: String? = null,
-    val selected: Vehicle? = null,
-    val models: List<Vehicle>? = null,
-    val query: TextFieldState = TextFieldState()
-)
+//data class SelectVehicleState(
+//    val selected: Vehicle? = null,
+//    val models: List<Vehicle>? = null,
+//    val query: TextFieldState = TextFieldState()
+//)

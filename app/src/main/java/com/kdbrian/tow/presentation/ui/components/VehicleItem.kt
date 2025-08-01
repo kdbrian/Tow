@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -28,7 +30,7 @@ fun VehicleItem(
     onSaved: (String) -> Unit = {},
     onSelect: () -> Unit = {}
 ) {
-    Surface(onSelect) {
+    Surface(onClick = onSelect, color = Color.Transparent, shape = RoundedCornerShape(6.dp)) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -54,7 +56,7 @@ fun VehicleItem(
                                 fontWeight = FontWeight.Light
                             )
                         ) {
-                            append(vehicleDto.vehicle.plateNumber)
+                            append(vehicleDto.plateNumber)
                         }
                     },
                 )

@@ -79,6 +79,7 @@ import com.kdbrian.tow.App
 import com.kdbrian.tow.LocalAppColor
 import com.kdbrian.tow.LocalFontFamily
 import com.kdbrian.tow.R
+import com.kdbrian.tow.presentation.nav.SelectVehicleRoute
 import com.kdbrian.tow.presentation.ui.components.TimeOption
 import com.kdbrian.tow.presentation.ui.components.TimeSelectionSection
 import com.kdbrian.tow.presentation.ui.components.TowCustomInputField
@@ -259,7 +260,7 @@ fun RequestService(
                             enabled = false,
                             fieldShape = RoundedCornerShape(48.dp),
                             modifier = Modifier.clickable {
-                                isVehiclesDropDownVisible = !isVehiclesDropDownVisible
+                                navHostController.navigate(SelectVehicleRoute)
                             },
                             trailingIcon = {
                                 Icon(
@@ -269,12 +270,6 @@ fun RequestService(
                             }
                         )
 
-                        DropdownMenu(
-                            expanded = isVehiclesDropDownVisible,
-                            onDismissRequest = { isVehiclesDropDownVisible = false }
-                        ) {
-
-                        }
                     }
                 }
             }
