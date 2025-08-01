@@ -1,4 +1,4 @@
-package com.kdbrian.tow.ui.components
+package com.kdbrian.tow.presentation.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape

@@ -1,4 +1,4 @@
-package com.kdbrian.tow.ui.components
+package com.kdbrian.tow.presentation.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,12 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kdbrian.tow.App
 import com.kdbrian.tow.domain.model.Vehicle
+import com.kdbrian.tow.domain.model.VehicleDto
 import com.kdbrian.tow.util.formatDateFromLong
 
 @Composable
 fun VehicleItem(
     modifier: Modifier = Modifier,
-    vehicle: Vehicle,
+    vehicleDto: VehicleDto,
+    onSaved: (String) -> Unit = {},
     onSelect: () -> Unit = {}
 ) {
     Surface(onSelect) {
@@ -41,7 +43,7 @@ fun VehicleItem(
                                 fontWeight = FontWeight.SemiBold
                             )
                         ) {
-                            append(vehicle.model)
+                            append(vehicleDto.vehicle.model)
                         }
 
                         append(" ")
@@ -52,14 +54,14 @@ fun VehicleItem(
                                 fontWeight = FontWeight.Light
                             )
                         ) {
-                            append(vehicle.plateNumber)
+                            append(vehicleDto.vehicle.plateNumber)
                         }
                     },
                 )
 
                 Text(
                     text = buildAnnotatedString {
-                        vehicle.lastServiced?.let {
+                        vehicleDto.vehicle.lastServiced?.let {
                             withStyle(SpanStyle(fontSize = 16.sp)) {
                                 append("last serviced ")
                                 withStyle(SpanStyle(fontSize = 14.sp)) {
@@ -75,7 +77,7 @@ fun VehicleItem(
                         withStyle(SpanStyle(fontSize = 16.sp)) {
                             append("last updated ")
                             withStyle(SpanStyle(fontSize = 14.sp)) {
-                                append(formatDateFromLong(timestamp = vehicle.lastUpdated))
+                                append(formatDateFromLong(timestamp = vehicleDto.vehicle.lastUpdated))
                             }
                         }
                     },
@@ -89,15 +91,15 @@ fun VehicleItem(
 @Composable
 private fun VehicleItemPrev() {
     App {
-        VehicleItem(
-            vehicle = Vehicle(
-                plateNumber = "ABC123",
-                model = "Toyota Camry",
-                mileage = 50000,
-                fuelTankCapacity = 50.0,
-                batteryCapacityKWh = 100.0,
-                lastServiced = 169
-            )
-        )
+//        VehicleItem(
+//            vehicle = Vehicle(
+//                plateNumber = "ABC123",
+//                model = "Toyota Camry",
+//                mileage = 50000,
+//                fuelTankCapacity = 50.0,
+//                batteryCapacityKWh = 100.0,
+//                lastServiced = 169
+//            )
+//        )
     }
 }

@@ -1,7 +1,9 @@
 package com.kdbrian.tow
 
 import android.app.Application
-import com.kdbrian.tow.presentation.di.firebaseModules
+import com.kdbrian.tow.di.coreModules
+import com.kdbrian.tow.di.firebaseModules
+import com.kdbrian.tow.di.vehicleModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +23,9 @@ class Tow : Application() {
             androidLogger()
 
             modules(
+                coreModules,
                 firebaseModules,
+                vehicleModules,
             )
         }
     }

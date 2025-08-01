@@ -4,6 +4,7 @@ agp = "8.10.1"
 coilCompose = "3.3.0"
 coilNetworkOkhttp = "3.3.0"
 constraintlayoutCompose = "1.1.1"
+datastore = "1.1.7"
 koinBom = "4.0.3"
 kotlin = "2.2.0"
 coreKtx = "1.16.0"
@@ -33,6 +34,8 @@ firebaseFirestore = "26.0.0"
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilNetworkOkhttp" }

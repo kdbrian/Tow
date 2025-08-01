@@ -35,6 +35,9 @@ data object RequestHistoryRoute
 @Serializable
 data class RequestDetailsRoute(val id: String)
 
+@Serializable
+data object SelectVehicleRoute
+
 
 
 

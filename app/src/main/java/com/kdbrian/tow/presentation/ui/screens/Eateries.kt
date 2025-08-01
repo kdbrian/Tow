@@ -34,8 +34,8 @@ import com.kdbrian.tow.LocalAppColor
 import com.kdbrian.tow.LocalFontFamily
 import com.kdbrian.tow.R
 import com.kdbrian.tow.domain.model.FoodItemData
-import com.kdbrian.tow.ui.components.EateriesCard
-import com.kdbrian.tow.ui.components.EateriesSavedCard
+import com.kdbrian.tow.presentation.ui.components.EateriesCard
+import com.kdbrian.tow.presentation.ui.components.EateriesSavedCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,5 +1,6 @@
 package com.kdbrian.tow.domain.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -15,6 +16,7 @@ import kotlinx.serialization.Serializable
 data class Vehicle(
     val plateNumber: String,
     val model: String,
+    @SerialName("basemodel") val baseModel: String = "",
     val mileage: Int,
     val fuelTankCapacity: Double? = null,
     val batteryCapacityKWh: Double? = null,

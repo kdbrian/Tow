@@ -1,4 +1,4 @@
-package com.kdbrian.tow.presentation.di
+package com.kdbrian.tow.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

@@ -35,8 +35,8 @@ import com.kdbrian.tow.BuildConfig
 import com.kdbrian.tow.LocalAppColor
 import com.kdbrian.tow.LocalFontFamily
 import com.kdbrian.tow.R
-import com.kdbrian.tow.ui.components.ActionCard
-import com.kdbrian.tow.ui.components.ServiceCard
+import com.kdbrian.tow.presentation.ui.components.ActionCard
+import com.kdbrian.tow.presentation.ui.components.ServiceCard
 import org.koin.compose.koinInject
 
 @Composable
