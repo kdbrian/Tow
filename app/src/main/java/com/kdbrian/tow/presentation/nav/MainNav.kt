@@ -21,7 +21,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun MainNav() {
 
     val navController = rememberNavController()
-    val vehicleScreenModel = koinViewModel<SelectVehicleScreenModel>()
+//    val vehicleScreenModel = koinViewModel<SelectVehicleScreenModel>()
 
 
     NavHost(navController = navController, startDestination = LandingRoute) {
@@ -67,7 +67,6 @@ fun MainNav() {
             //load id
             SelectVehicle(
                 navHostController = navController,
-                selectVehicleScreenModel = vehicleScreenModel
             )
         }
 

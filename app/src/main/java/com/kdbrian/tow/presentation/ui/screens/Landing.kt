@@ -1,6 +1,6 @@
 package com.kdbrian.tow.presentation.ui.screens
 
-import android.credentials.GetCredentialException
+import android.app.Activity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,17 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.PasswordCredential
-import androidx.credentials.PublicKeyCredential
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.firebase.auth.FirebaseAuth
 import com.kdbrian.tow.App
 import com.kdbrian.tow.LocalAppColor
@@ -65,9 +56,10 @@ import com.kdbrian.tow.presentation.ui.components.CustomArrowButton
 import com.kdbrian.tow.presentation.ui.components.LoginAction
 import com.kdbrian.tow.presentation.ui.components.MapCard
 import com.kdbrian.tow.presentation.ui.components.ServiceCard
-import kotlinx.coroutines.launch
+import com.kdbrian.tow.presentation.ui.state.AuthViewModel
 import org.koin.compose.koinInject
-import timber.log.Timber
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,79 +70,12 @@ fun Landing(
 
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-    val firebaseAuth = koinInject<FirebaseAuth>()
     var createAccountVisible by remember { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
 
-    val credentialManager = remember { CredentialManager.create(context) }
-    val requestAuth: () -> Unit = {
-        coroutineScope.launch {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            try {
-                // 1. Create a GetCredentialRequest for Google ID tokens
-                val googleIdOption = GetGoogleIdOption.Builder()
-                    .setFilterByAuthorizedAccounts(false)
-                    .setServerClientId(context.getString(R.string.web_client_id))
-                    .build()
-
-                val request = GetCredentialRequest.Builder()
-                    .addCredentialOption(googleIdOption)
-                    .build()
-
-                // 2. Launch the Credential Manager flow
-                val response = credentialManager.getCredential(context, request)
-
-                when (val credential = response.credential) {
-                    // Passkey credential
-                    is PublicKeyCredential -> {
-                        val responseJson = credential.authenticationResponseJson
-                        // In a real app, you'd send this to your backend for passkey authentication
-                        snackbarHostState.showSnackbar("Passkey credential received. Backend integration needed.")
-                    }
-                    // Password credential
-                    is PasswordCredential -> {
-                        // Send ID and password to your server to validate and authenticate.
-                        val username = credential.id
-                        val password = credential.password
-                        snackbarHostState.showSnackbar("Password credential received. Handle username/password login.")
-                    }
-                    // GoogleIdToken credential (as CustomCredential)
-                    is CustomCredential -> {
-                        if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                            try {
-                                val googleIdTokenCredential = GoogleIdTokenCredential
-                                    .createFrom(credential.data)
-
-                                val googleIdToken = googleIdTokenCredential.idToken
-
-                                val email = googleIdTokenCredential.id
-                                val displayName = googleIdTokenCredential.displayName
-
-
-                                Timber.d("for $email $displayName")
-                            } catch (e: GoogleIdTokenParsingException) {
-                                snackbarHostState.showSnackbar("Received an invalid Google ID token response: ${e.message}")
-                            }
-                        } else {
-                            // Catch any unrecognized custom credential type here.
-                            snackbarHostState.showSnackbar("Unexpected type of custom credential: ${credential.type}")
-                        }
-                    }
-
-                    else -> {
-                        snackbarHostState.showSnackbar("Unknown credential type returned.")
-                    }
-                }
-            } catch (e: GetCredentialException) {
-                snackbarHostState.showSnackbar("Credential Manager error: ${e.message}")
-            } catch (e: Exception) {
-                Timber.tag("Exception").d(e.message.toString())
-                snackbarHostState.showSnackbar("An unexpected error occurred: ${e.message}")
-//                }
-            }
-        }
-    }
+    val firebaseAuth = koinInject<FirebaseAuth>()
+    val activity = context as Activity
+    val authViewModel = koinViewModel<AuthViewModel>(parameters = { parametersOf(activity) })
 
 
     Scaffold(
@@ -268,16 +193,8 @@ fun Landing(
             sheetState = bottomSheetState
         ) {
             LoginAction(
-                onLoginClick = {
-                    createAccountVisible = false
-                    requestAuth()
-                },
-                onCreateAccountClick = {
-                    createAccountVisible = false
-                    requestAuth()
-                }
+                authViewModel = authViewModel
             )
-
 
         }
     }

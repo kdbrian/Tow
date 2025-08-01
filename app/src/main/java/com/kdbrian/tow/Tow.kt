@@ -1,6 +1,7 @@
 package com.kdbrian.tow
 
 import android.app.Application
+import com.kdbrian.tow.di.authModule
 import com.kdbrian.tow.di.coreModules
 import com.kdbrian.tow.di.firebaseModules
 import com.kdbrian.tow.di.vehicleModules
@@ -23,6 +24,7 @@ class Tow : Application() {
             androidLogger()
 
             modules(
+                authModule,
                 coreModules,
                 firebaseModules,
                 vehicleModules,

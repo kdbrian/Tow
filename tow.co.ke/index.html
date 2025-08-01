@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TowConnect - Your Roadside & Restaurant Companion</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Quicksand -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Smooth scrolling for navigation links */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #e3f2fd; /* Light Blue 50 - Material Theme background */
+        }
+        /* Material Theme inspired colors and gradients */
+        /* Primary Blue: #2196F3 (Blue 500) */
+        /* Secondary Orange: #FF9800 (Orange 500) */
+
+        /* Custom gradient for hero section (Primary Blue to a darker shade) */
+        .hero-gradient {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); /* Blue 500 to Blue 700 */
+        }
+        /* Custom gradient for feature cards */
+        .card-gradient-1 {
+            background: linear-gradient(45deg, #42A5F5 0%, #2196F3 100%); /* Blue 400 to Blue 500 */
+        }
+        .card-gradient-2 {
+            background: linear-gradient(45deg, #FFB74D 0%, #FF9800 100%); /* Orange 300 to Orange 500 */
+        }
+        .card-gradient-3 {
+            background: linear-gradient(45deg, #81C784 0%, #4CAF50 100%); /* Green 300 to Green 500 */
+        }
+        /* Keyframe for subtle fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        /* Keyframe for button hover pulse */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .btn-pulse:hover {
+            animation: pulse 0.5s infinite alternate;
+        }
+        /* Shadow animation for cards */
+        .card-shadow-animate {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Initial subtle shadow */
+        }
+        .card-shadow-animate:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Larger, more pronounced shadow on hover */
+            transform: translateY(-5px); /* Lift effect */
+        }
+
+        /* New: Keyframe for car animation */
+        @keyframes carFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+            100% { transform: translateY(0px); }
+        }
+        /* Apply animation to the truck icon */
+        .animate-car {
+            animation: carFloat 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center">
+            <!-- Added animate-car class to the truck icon -->
+            <i class="fas fa-truck-pickup text-blue-600 text-3xl mr-2 animate-car"></i>
+            <h1 class="text-2xl font-bold text-blue-700">TowConnect</h1>
+        </div>
+        <!-- Navigation -->
+        <nav>
+            <ul class="flex space-x-4 sm:space-x-6 text-sm sm:text-base">
+                <li><a href="#features" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Features</a></li>
+                <li><a href="#how-it-works" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">How It Works</a></li>
+                <li><a href="#download" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Download App</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-gradient text-white py-20 px-6 md:px-12 text-center rounded-b-3xl shadow-xl animate-fade-in">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                    Your Roadside Partner, Always Within Reach.
+                </h2>
+                <p class="text-lg md:text-xl mb-10 opacity-90">
+                    Connecting you to reliable tow services and the nearest eateries, all through one intuitive mobile app.
+                    Get help fast, and find comfort on the go.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="https://www.apple.com/app-store/" target="_blank" class="bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 btn-pulse flex items-center justify-center text-base sm:text-lg">
+                        <i class="fab fa-apple text-2xl mr-3"></i>
+                        Download on the App Store
+                    </a>
+                    <a href="https://play.google.com/store" target="_blank" class="bg-gray-800 text-white hover:bg-gray-700 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 btn-pulse flex items-center justify-center text-base sm:text-lg">
+                        <i class="fab fa-google-play text-2xl mr-3"></i>
+                        Get it on Google Play
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-16 px-6 md:px-12 bg-white rounded-xl mx-auto max-w-6xl -mt-16 relative z-10 shadow-lg animate-fade-in" style="animation-delay: 0.2s;">
+            <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">How TowConnect Empowers You</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1: Instant Tow Connection -->
+                <div class="card-gradient-1 text-white p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
+                    <div class="text-5xl mb-4 text-center">
+                        <i class="fas fa-car-crash"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-3 text-center">Rapid Roadside Assistance</h4>
+                    <p class="text-center opacity-90 text-sm sm:text-base">
+                        Connect instantly with qualified tow service providers near your location. Get help when you need it most, without the hassle.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Restaurant Finder -->
+                <div class="card-gradient-2 text-white p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
+                    <div class="text-5xl mb-4 text-center">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-3 text-center">Discover Nearby Eateries</h4>
+                    <p class="text-center opacity-90 text-sm sm:text-base">
+                        While you wait, easily find the closest restaurants, cafes, or eateries to grab a bite or relax.
+                    </p>
+                </div>
+
+                <!-- Feature 3: Seamless Experience -->
+                <div class="card-gradient-3 text-white p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
+                    <div class="text-5xl mb-4 text-center">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-3 text-center">User-Friendly Mobile App</h4>
+                    <p class="text-center opacity-90 text-sm sm:text-base">
+                        Our intuitive mobile app makes requesting a tow or finding a restaurant a smooth and stress-free experience.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-16 px-6 md:px-12 bg-blue-50 text-center animate-fade-in" style="animation-delay: 0.4s;">
+            <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">How It Works in 3 Simple Steps</h3>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Step 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center transform hover:translate-y-2 transition duration-300">
+                    <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center text-3xl font-bold mb-4">1</div>
+                    <h4 class="text-xl font-semibold mb-3">Download the App</h4>
+                    <p class="text-gray-600 text-sm sm:text-base">Get TowConnect from your preferred app store and create your free account.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center transform hover:translate-y-2 transition duration-300">
+                    <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center text-3xl font-bold mb-4">2</div>
+                    <h4 class="text-xl font-semibold mb-3">Request Service / Find Eatery</h4>
+                    <p class="text-gray-600 text-sm sm:text-base">Easily request a tow or search for nearby restaurants with a few taps.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center transform hover:translate-y-2 transition duration-300">
+                    <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center text-3xl font-bold mb-4">3</div>
+                    <h4 class="text-xl font-semibold mb-3">Get Connected</h4>
+                    <p class="text-gray-600 text-sm sm:text-base">We connect you to the nearest help or the perfect place to eat, instantly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section (Download App) -->
+        <section id="download" class="hero-gradient text-white py-20 px-6 md:px-12 text-center rounded-t-3xl shadow-xl animate-fade-in" style="animation-delay: 0.6s;">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                    Ready to Experience Seamless Assistance?
+                </h3>
+                <p class="text-lg md:text-xl mb-10 opacity-90">
+                    Join thousands of satisfied users. Download TowConnect today and make your journeys worry-free.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="https://www.apple.com/app-store/" target="_blank" class="bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 btn-pulse flex items-center justify-center text-base sm:text-lg">
+                        <i class="fab fa-apple text-2xl mr-3"></i>
+                        Download on the App Store
+                    </a>
+                    <a href="https://play.google.com/store" target="_blank" class="bg-gray-800 text-white hover:bg-gray-700 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 btn-pulse flex items-center justify-center text-base sm:text-lg">
+                        <i class="fab fa-google-play text-2xl mr-3"></i>
+                        Get it on Google Play
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 px-6 md:px-12 text-center">
+        <div class="max-w-6xl mx-auto">
+            <p>&copy; 2025 TowConnect. All rights reserved.</p>
+            <p class="mt-2 text-sm sm:text-base">
+                <a href="#" class="hover:text-white transition duration-300">Privacy Policy</a> |
+                <a href="#" class="hover:text-white transition duration-300">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
