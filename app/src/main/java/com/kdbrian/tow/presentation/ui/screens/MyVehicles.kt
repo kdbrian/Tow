@@ -113,7 +113,7 @@ fun MyVehicles(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(12.dp)
+                    .padding(16.dp)
             ) {
                 uiState.mine?.let { mine ->
 

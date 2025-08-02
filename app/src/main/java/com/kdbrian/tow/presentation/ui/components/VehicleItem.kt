@@ -48,7 +48,7 @@ fun VehicleItem(
                             append(vehicle.model)
                         }
 
-                        append(" ")
+                        append("\n")
 
                         withStyle(
                             SpanStyle(
