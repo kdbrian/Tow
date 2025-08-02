@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TowConnect - Your Roadside & Restaurant Companion</title>
+    <title>TowConnect - Your Roadside & Energy Companion</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Quicksand -->
@@ -17,26 +17,31 @@
         }
         body {
             font-family: 'Quicksand', sans-serif;
-            background-color: #e3f2fd; /* Light Blue 50 - Material Theme background */
+            background-color: #e3f2fd; /* Light Blue 50 - Clean/Material Theme background */
         }
-        /* Material Theme inspired colors and gradients */
-        /* Primary Blue: #2196F3 (Blue 500) */
-        /* Secondary Orange: #FF9800 (Orange 500) */
+        /* Clean Energy / Material Theme inspired colors and gradients */
+        /* Primary Green: #4CAF50 (Green 500) */
+        /* Secondary Blue: #2196F3 (Blue 500) */
+        /* Tertiary Cyan: #00BCD4 (Cyan 500) */
 
-        /* Custom gradient for hero section (Primary Blue to a darker shade) */
+        /* Custom gradient for hero section (Green to Blue for clean energy and tech) */
         .hero-gradient {
-            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); /* Blue 500 to Blue 700 */
+            background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%); /* Green 500 to Blue 500 */
         }
-        /* Custom gradient for feature cards */
-        .card-gradient-1 {
-            background: linear-gradient(45deg, #42A5F5 0%, #2196F3 100%); /* Blue 400 to Blue 500 */
+        /* Custom gradients for feature cards */
+        .card-gradient-1 { /* Towing - Blue */
+            background: linear-gradient(45deg, #64B5F6 0%, #2196F3 100%); /* Light Blue 400 to Blue 500 */
         }
-        .card-gradient-2 {
-            background: linear-gradient(45deg, #FFB74D 0%, #FF9800 100%); /* Orange 300 to Orange 500 */
+        .card-gradient-2 { /* Restaurant - Amber/Yellow */
+            background: linear-gradient(45deg, #FFD54F 0%, #FFC107 100%); /* Amber 300 to Amber 500 */
         }
-        .card-gradient-3 {
-            background: linear-gradient(45deg, #81C784 0%, #4CAF50 100%); /* Green 300 to Green 500 */
+        .card-gradient-3 { /* EV Charging - Cyan/Teal */
+            background: linear-gradient(45deg, #00BCD4 0%, #0097A7 100%); /* Cyan 500 to Cyan 700 */
         }
+        .card-gradient-4 { /* Seamless Experience - Light Green */
+            background: linear-gradient(45deg, #8BC34A 0%, #689F38 100%); /* Light Green 500 to Light Green 700 */
+        }
+
         /* Keyframe for subtle fade-in animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -64,7 +69,7 @@
             transform: translateY(-5px); /* Lift effect */
         }
 
-        /* New: Keyframe for car animation */
+        /* Keyframe for car animation */
         @keyframes carFloat {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-3px); }
@@ -74,15 +79,22 @@
         .animate-car {
             animation: carFloat 2s ease-in-out infinite;
         }
+
+        /* Custom style for transparent header with backdrop filter */
+        .header-transparent {
+            background-color: rgba(255, 255, 255, 0.95); /* White with 95% opacity */
+            backdrop-filter: blur(8px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(8px); /* Safari support */
+        }
     </style>
 </head>
 <body class="text-gray-800">
 
     <!-- Header -->
-    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50">
+    <header class="header-transparent shadow-md py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50">
         <div class="flex items-center">
             <!-- Added animate-car class to the truck icon -->
-            <i class="fas fa-truck-pickup text-blue-600 text-3xl mr-2 animate-car"></i>
+            <i class="fas fa-truck-pickup text-green-600 text-3xl mr-2 animate-car"></i>
             <h1 class="text-2xl font-bold text-blue-700">TowConnect</h1>
         </div>
         <!-- Navigation -->
@@ -91,6 +103,7 @@
                 <li><a href="#features" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Features</a></li>
                 <li><a href="#how-it-works" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">How It Works</a></li>
                 <li><a href="#download" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Download App</a></li>
+                <li><a href="#legal-contact" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Legal & Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -100,11 +113,11 @@
         <section class="hero-gradient text-white py-20 px-6 md:px-12 text-center rounded-b-3xl shadow-xl animate-fade-in">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                    Your Roadside Partner, Always Within Reach.
+                    Your Journey Connected, Charged & Satisfied.
                 </h2>
                 <p class="text-lg md:text-xl mb-10 opacity-90">
-                    Connecting you to reliable tow services and the nearest eateries, all through one intuitive mobile app.
-                    Get help fast, and find comfort on the go.
+                    Connecting you to reliable tow services, the nearest eateries, and convenient EV charging, all through one intuitive mobile app.
+                    Stay powered, fed, and on the go.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                     <a href="https://www.apple.com/app-store/" target="_blank" class="bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 btn-pulse flex items-center justify-center text-base sm:text-lg">
@@ -122,7 +135,7 @@
         <!-- Features Section -->
         <section id="features" class="py-16 px-6 md:px-12 bg-white rounded-xl mx-auto max-w-6xl -mt-16 relative z-10 shadow-lg animate-fade-in" style="animation-delay: 0.2s;">
             <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">How TowConnect Empowers You</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Feature 1: Instant Tow Connection -->
                 <div class="card-gradient-1 text-white p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">
@@ -135,7 +148,7 @@
                 </div>
 
                 <!-- Feature 2: Restaurant Finder -->
-                <div class="card-gradient-2 text-white p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
+                <div class="card-gradient-2 text-gray-900 p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">
                         <i class="fas fa-utensils"></i>
                     </div>
@@ -145,14 +158,25 @@
                     </p>
                 </div>
 
-                <!-- Feature 3: Seamless Experience -->
+                <!-- Feature 3: EV Charging -->
                 <div class="card-gradient-3 text-white p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
+                    <div class="text-5xl mb-4 text-center">
+                        <i class="fas fa-charging-station"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-3 text-center">Effortless EV Charging</h4>
+                    <p class="text-center opacity-90 text-sm sm:text-base">
+                        Locate and navigate to the nearest electric vehicle charging stations, ensuring you're always powered up for your journey.
+                    </p>
+                </div>
+
+                <!-- Feature 4: Seamless Experience (Moved to 4th position) -->
+                <div class="card-gradient-4 text-white p-8 rounded-xl card-shadow-animate transform hover:scale-105 transition duration-300 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h4 class="text-2xl font-semibold mb-3 text-center">User-Friendly Mobile App</h4>
                     <p class="text-center opacity-90 text-sm sm:text-base">
-                        Our intuitive mobile app makes requesting a tow or finding a restaurant a smooth and stress-free experience.
+                        Our intuitive mobile app makes requesting a tow, finding a restaurant, or charging an EV a smooth and stress-free experience.
                     </p>
                 </div>
             </div>
@@ -171,14 +195,14 @@
                 <!-- Step 2 -->
                 <div class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center transform hover:translate-y-2 transition duration-300">
                     <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center text-3xl font-bold mb-4">2</div>
-                    <h4 class="text-xl font-semibold mb-3">Request Service / Find Eatery</h4>
-                    <p class="text-gray-600 text-sm sm:text-base">Easily request a tow or search for nearby restaurants with a few taps.</p>
+                    <h4 class="text-xl font-semibold mb-3">Request Service / Find Charging</h4>
+                    <p class="text-gray-600 text-sm sm:text-base">Easily request a tow, search for nearby restaurants, or find an EV charger with a few taps.</p>
                 </div>
                 <!-- Step 3 -->
                 <div class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center transform hover:translate-y-2 transition duration-300">
                     <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center text-3xl font-bold mb-4">3</div>
                     <h4 class="text-xl font-semibold mb-3">Get Connected</h4>
-                    <p class="text-gray-600 text-sm sm:text-base">We connect you to the nearest help or the perfect place to eat, instantly.</p>
+                    <p class="text-gray-600 text-sm sm:text-base">We connect you to the nearest help, the perfect place to eat, or your next charge, instantly.</p>
                 </div>
             </div>
         </section>
@@ -204,6 +228,61 @@
                 </div>
             </div>
         </section>
+
+        <!-- Legal & Contact Section -->
+        <section id="legal-contact" class="py-16 px-6 md:px-12 bg-white rounded-xl mx-auto max-w-6xl mt-8 shadow-lg animate-fade-in" style="animation-delay: 0.8s;">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">Legal & Contact Information</h2>
+
+            <!-- Terms and Conditions Section -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold text-blue-700 mb-4">Terms and Conditions</h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    Welcome to **TowConnect**. By accessing or using our mobile application and services, you agree to be bound by these Terms and Conditions. These terms govern your use of the TowConnect app, including all features related to roadside assistance, restaurant discovery, and EV charging.
+                </p>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    While we strive for accuracy and reliability, the information and services provided through our app are for general guidance only. We do not guarantee the availability, quality, or suitability of any third-party services (tow providers, restaurants, EV chargers) linked through our platform. Your use of these services is at your own discretion and risk.
+                </p>
+                <p class="mb-6 text-gray-700 leading-relaxed">
+                    We reserve the right to modify or discontinue any part of our services or these terms at any time without prior notice. Continued use of TowConnect after any such changes constitutes your acceptance of the new terms.
+                </p>
+
+                <h4 class="text-xl font-semibold text-blue-700 mb-3">Open Source Licenses (MIT License)</h4>
+                <p class="mb-6 text-gray-700 leading-relaxed">
+                    TowConnect proudly incorporates various open-source components to deliver a robust and transparent user experience. Many of these components are distributed under the **MIT License**, a permissive free software license that allows for extensive use, modification, and distribution. This commitment to open source enhances our development and fosters a collaborative ecosystem. For a complete list of all open-source components and their respective licenses, please refer to the "About" or "Legal" section within the TowConnect mobile application itself.
+                </p>
+            </div>
+
+            <hr class="border-gray-300 my-10">
+
+            <!-- Contact Section -->
+            <div>
+                <h3 class="text-2xl font-semibold text-blue-700 mb-4">Contact Us</h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    Have questions, feedback, or need support? We're here to help! Reach out to our team using the details below:
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700">
+                    <div>
+                        <p class="font-medium flex items-center mb-2">
+                            <i class="fas fa-envelope text-green-600 mr-3 text-xl"></i>
+                            Email: <a href="mailto:support@towconnect.com" class="ml-2 hover:underline text-blue-600">support@towconnect.com</a>
+                        </p>
+                        <p class="font-medium flex items-center mb-2">
+                            <i class="fas fa-phone-alt text-green-600 mr-3 text-xl"></i>
+                            Phone: <a href="tel:+254110722587" class="ml-2 hover:underline text-blue-600">+(2541) 14 678 91</a>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-medium flex items-start mb-2">
+                            <i class="fas fa-map-marker-alt text-green-600 mr-3 text-xl mt-1"></i>
+                            Address: <span class="ml-2">Waiyaki Way, Westlands<br>Nairobi<br>Kenya</span>
+                        </p>
+                    </div>
+                </div>
+                <p class="mt-6 text-gray-700 leading-relaxed">
+                    Our dedicated support team is available 24/7.
+                </p>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -211,8 +290,7 @@
         <div class="max-w-6xl mx-auto">
             <p>&copy; 2025 TowConnect. All rights reserved.</p>
             <p class="mt-2 text-sm sm:text-base">
-                <a href="#" class="hover:text-white transition duration-300">Privacy Policy</a> |
-                <a href="#" class="hover:text-white transition duration-300">Terms of Service</a>
+                <a href="#legal-contact" class="hover:text-white transition duration-300">Legal & Contact</a>
             </p>
         </div>
     </footer>

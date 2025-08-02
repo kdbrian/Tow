@@ -133,7 +133,7 @@ dependencies {
 
     implementation(libs.play.services.location)
 
-    implementation(libs.androidx.datastore)
+//    implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
 
 

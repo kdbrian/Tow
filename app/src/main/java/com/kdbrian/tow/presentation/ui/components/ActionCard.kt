@@ -49,7 +49,8 @@ fun ActionCard(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .height(90.dp),
+//            .height(90.dp)
+        ,
         onClick = onClick,
         color = Color.White,
         shape = RoundedCornerShape(16.dp),
@@ -58,7 +59,7 @@ fun ActionCard(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -78,7 +79,7 @@ fun ActionCard(
                 Text(
                     text = subtitle,
                     style = MaterialTheme.typography.bodyMedium.copy(
-//                        color = Color.Gray,
+                        color = Color.Gray,
                         fontSize = 14.sp
                     )
                 )

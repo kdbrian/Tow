@@ -14,7 +14,11 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Vehicle(
+    val vid: String = "",
+    val type: String = "",
     val model: String = "",
+    val plateNumber: String = "",
+    val location: String = "",
     @SerialName("basemodel") val baseModel: String = "",
     val mileage: Int=0,
     val fuelTankCapacity: Double? = null,

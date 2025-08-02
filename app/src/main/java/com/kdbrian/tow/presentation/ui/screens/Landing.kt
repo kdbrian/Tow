@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -130,7 +131,7 @@ fun Landing(
                     },
                     shape = CircleShape,
                     border = BorderStroke(
-                        width = 4.dp,
+                        width = 2.dp,
                         brush = Brush.linearGradient(
                             colors = listOf(
                                 Color(0xFFF3D9B1),
@@ -148,7 +149,8 @@ fun Landing(
                             placeholder = painterResource(R.drawable.cars),
                             modifier = Modifier.fillMaxSize(),
                             contentDescription = null,
-                            contentScale = ContentScale.Fit,
+                            error = painterResource(R.drawable.current_premium),
+                            contentScale = ContentScale.Crop,
                         )
                     }
                 }
@@ -156,6 +158,7 @@ fun Landing(
 
             ServiceCard(
                 title = "Request Service",
+                supportText = buildAnnotatedString { },
                 backgroundImagePainter = painterResource(R.drawable.tow_truck)
             ) {
                 navHostController.navigate(RequestServiceRoute)
@@ -179,7 +182,9 @@ fun Landing(
 
             ServiceCard(
                 title = "Eateries",
-                supportText = "Find the best eateries near you.",
+                supportText = buildAnnotatedString {
+                    append("Find the best eateries near you.")
+                },
                 backgroundImagePainter = painterResource(R.drawable.fast_foods),
                 onClick = { navHostController.navigate(EateriesRoute) }
             )
@@ -193,7 +198,8 @@ fun Landing(
             sheetState = bottomSheetState
         ) {
             LoginAction(
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                onDismiss = { createAccountVisible = false },
             )
 
         }

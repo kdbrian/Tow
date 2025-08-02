@@ -85,6 +85,21 @@ import com.kdbrian.tow.presentation.ui.components.TimeSelectionSection
 import com.kdbrian.tow.presentation.ui.components.TowCustomInputField
 import com.kdbrian.tow.presentation.ui.components.CustomArrowButton
 import com.kdbrian.tow.util.getFileName
+import kotlinx.serialization.Serializable
+
+
+@Serializable
+sealed class RequestServiceAction {
+    @Serializable
+    data object SelectVehicle : RequestServiceAction()
+
+    @Serializable
+    data object SelectLocation : RequestServiceAction()
+
+    @Serializable
+    data object SelectService : RequestServiceAction()
+
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
@@ -113,12 +128,6 @@ fun RequestService(
     val context = LocalContext.current
     var isOptionsVisible by remember { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
-    LaunchedEffect(isOptionsVisible) {
-        if (isOptionsVisible)
-            bottomSheetState.show()
-        else
-            bottomSheetState.hide()
-    }
 
     val timeOptions = listOf(
         TimeOption("45 Mins", 45 * 60 * 100),
@@ -132,6 +141,19 @@ fun RequestService(
             TextFieldState(selectedTime?.label ?: "")
         }
     }
+
+    var isServicesDropDownVisible by remember { mutableStateOf(false) }
+    val currentAction by remember {
+        mutableStateOf<RequestServiceAction?>(null)
+    }
+
+    LaunchedEffect(isOptionsVisible, isServicesDropDownVisible) {
+        if (isOptionsVisible || isServicesDropDownVisible)
+            bottomSheetState.show()
+        else
+            bottomSheetState.hide()
+    }
+
 
 
     Scaffold(
@@ -189,7 +211,6 @@ fun RequestService(
         ) {
 
             item {
-                var isServicesDropDownVisible by remember { mutableStateOf(false) }
                 val icon by remember {
                     derivedStateOf {
                         if (isServicesDropDownVisible)
@@ -209,30 +230,21 @@ fun RequestService(
                         )
                     )
 
-                    Box {
 
-                        TowCustomInputField(
-                            placeholderText = "tap to select",
-                            enabled = false,
-                            fieldShape = RoundedCornerShape(48.dp),
-                            modifier = Modifier.clickable {
-                                isServicesDropDownVisible = !isServicesDropDownVisible
-                            },
-                            trailingIcon = {
-                                Icon(
-                                    imageVector = icon,
-                                    contentDescription = null
-                                )
-                            }
-                        )
-
-                        DropdownMenu(
-                            expanded = isServicesDropDownVisible,
-                            onDismissRequest = { isServicesDropDownVisible = false }
-                        ) {
-
+                    TowCustomInputField(
+                        placeholderText = "tap to select",
+                        enabled = false,
+                        fieldShape = RoundedCornerShape(48.dp),
+                        modifier = Modifier.clickable {
+                            isServicesDropDownVisible = !isServicesDropDownVisible
+                        },
+                        trailingIcon = {
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null
+                            )
                         }
-                    }
+                    )
                 }
             }
 
@@ -242,7 +254,6 @@ fun RequestService(
 
 
             item {
-                var isVehiclesDropDownVisible by remember { mutableStateOf(false) }
 
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -261,7 +272,7 @@ fun RequestService(
                             enabled = false,
                             fieldShape = RoundedCornerShape(48.dp),
                             modifier = Modifier.clickable {
-                                navHostController.navigate(SelectVehicleRoute)
+                                isServicesDropDownVisible = !isServicesDropDownVisible
                             },
                             trailingIcon = {
                                 Icon(
@@ -517,7 +528,7 @@ fun RequestService(
         }
     }
 
-    if (isOptionsVisible) {
+    if (isOptionsVisible || isServicesDropDownVisible) {
 
         ModalBottomSheet(
             onDismissRequest = { isOptionsVisible = false },
@@ -525,64 +536,79 @@ fun RequestService(
             containerColor = LocalAppColor.current,
             contentColor = Color.Black
         ) {
-            Column(
-                modifier = Modifier.padding(8.dp)
-            ) {
-                TimeSelectionSection(
-                    title = "Select Time",
-                    timeOptions = timeOptions,
-                    selectedTime = selectedTime,
-                    onTimeSelected = {
-                        selectedTime = it
-                        isOptionsVisible = false
-                    }
-                )
+            if (isOptionsVisible){
+                Column(
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    TimeSelectionSection(
+                        title = "Select Time",
+                        timeOptions = timeOptions,
+                        selectedTime = selectedTime,
+                        onTimeSelected = {
+                            selectedTime = it
+                            isOptionsVisible = false
+                        }
+                    )
 
-                Spacer(Modifier.padding(12.dp))
+                    Spacer(Modifier.padding(12.dp))
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .padding(12.dp)
-                        .background(color = Color(0xFFFF0101), shape = RoundedCornerShape(24.dp))
-                        .background(
-                            brush = Brush.linearGradient(
-                                colors = listOf(
-                                    Color.Transparent,
-                                    Color.Black
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(150.dp)
+                            .padding(12.dp)
+                            .background(color = Color(0xFFFF0101), shape = RoundedCornerShape(24.dp))
+                            .background(
+                                brush = Brush.linearGradient(
+                                    colors = listOf(
+                                        Color.Transparent,
+                                        Color.Black
+                                    )
                                 )
                             )
-                        )
-                        .clip(
-                            shape = RoundedCornerShape(24.dp)
-                        ),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                            .clip(
+                                shape = RoundedCornerShape(24.dp)
+                            ),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        Text("Unlock Short Times")
-                        Text("Access shorter service delivery times.")
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text("Unlock Short Times")
+                            Text("Access shorter service delivery times.")
+                        }
+
+                        Image(
+                            painter = painterResource(R.drawable.image_removebg_preview),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(100.dp)
+                                .align(Alignment.TopStart)
+                        )
                     }
-
-                    Image(
-                        painter = painterResource(R.drawable.image_removebg_preview),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(100.dp)
-                            .align(Alignment.TopStart)
-                    )
                 }
-
-
+            }else{
+                currentAction?.let {action ->
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ){
+                        when(action){
+                            RequestServiceAction.SelectLocation -> Unit
+                            RequestServiceAction.SelectService -> Unit
+                            RequestServiceAction.SelectVehicle -> SelectVehicle()
+                        }
+                    }
+                }
             }
         }
 
 
     }
+
+
+
 }
 
 @Preview

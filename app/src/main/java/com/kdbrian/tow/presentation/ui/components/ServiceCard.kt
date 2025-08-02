@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -35,14 +37,16 @@ import com.kdbrian.tow.R
 fun ServiceCard(
     modifier: Modifier = Modifier,
     title: String = LoremIpsum(2).values.joinToString(),
-    supportText: String = LoremIpsum(12).values.joinToString(),
+    supportText: AnnotatedString = buildAnnotatedString {
+        append(LoremIpsum(12).values.joinToString())
+    },
     backgroundImagePainter: Painter = painterResource(R.drawable.cars),
     onClick: () -> Unit
 ) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(160.dp)
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(24.dp),
         shadowElevation = 4.dp,
@@ -108,7 +112,7 @@ private fun ServiceCardPrev() {
     App {
         ServiceCard(
             title = "Request Service",
-            supportText = LoremIpsum(12).values.joinToString(),
+            supportText = buildAnnotatedString { append(LoremIpsum(12).values.joinToString())},
             backgroundImagePainter = painterResource(R.drawable.cars),
             onClick = { }
         )

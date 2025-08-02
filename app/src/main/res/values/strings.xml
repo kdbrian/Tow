@@ -7,4 +7,9 @@
     </string-array>
 
     <string name="web_client_id">516163279876-pe6e96hf45p5u6lougpqlsmv654st0ec.apps.googleusercontent.com</string>
+    <string name="confirm_to_delete_your_account_note">Please confirm to delete your account. Note: This action cannot be undone!!.</string>
+    <string name="updating_display_photo">Updating display photo.</string>
+    <string name="cancel">Cancel</string>
+    <string name="don_t_just_wait">"Don't just wait, upgrade your wait. Get "</string>
+    <string name="confirm">Confirm</string>
 </resources>

@@ -26,7 +26,7 @@ import com.kdbrian.tow.util.formatDateFromLong
 @Composable
 fun VehicleItem(
     modifier: Modifier = Modifier,
-    vehicleDto: VehicleDto,
+    vehicle: Vehicle,
     onSaved: (String) -> Unit = {},
     onSelect: () -> Unit = {}
 ) {
@@ -45,7 +45,7 @@ fun VehicleItem(
                                 fontWeight = FontWeight.SemiBold
                             )
                         ) {
-                            append(vehicleDto.vehicle.model)
+                            append(vehicle.model)
                         }
 
                         append(" ")
@@ -56,14 +56,14 @@ fun VehicleItem(
                                 fontWeight = FontWeight.Light
                             )
                         ) {
-                            append(vehicleDto.plateNumber)
+                            append(vehicle.plateNumber)
                         }
                     },
                 )
 
                 Text(
                     text = buildAnnotatedString {
-                        vehicleDto.vehicle.lastServiced?.let {
+                        vehicle.lastServiced?.let {
                             withStyle(SpanStyle(fontSize = 16.sp)) {
                                 append("last serviced ")
                                 withStyle(SpanStyle(fontSize = 14.sp)) {
@@ -79,7 +79,7 @@ fun VehicleItem(
                         withStyle(SpanStyle(fontSize = 16.sp)) {
                             append("last updated ")
                             withStyle(SpanStyle(fontSize = 14.sp)) {
-                                append(formatDateFromLong(timestamp = vehicleDto.vehicle.lastUpdated))
+                                append(formatDateFromLong(timestamp = vehicle.lastUpdated))
                             }
                         }
                     },

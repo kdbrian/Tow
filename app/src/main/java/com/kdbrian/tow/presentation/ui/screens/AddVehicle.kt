@@ -30,6 +30,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,6 +39,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -59,22 +61,32 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.kdbrian.tow.App
 import com.kdbrian.tow.LocalAppColor
 import com.kdbrian.tow.LocalFontFamily
 import com.kdbrian.tow.R
+import com.kdbrian.tow.domain.model.Vehicle
 import com.kdbrian.tow.presentation.ui.components.CustomArrowButton
 import com.kdbrian.tow.presentation.ui.components.TowCustomInputField
+import com.kdbrian.tow.presentation.ui.state.AddVehicleViewModel
 import com.kdbrian.tow.util.getLocationName
+import kotlinx.serialization.Serializable
+import org.koin.compose.viewmodel.koinViewModel
 import timber.log.Timber
+
+@Serializable
+sealed class AddVehicleAction {
+
+    @Serializable
+    data object SelectPlace : AddVehicleAction()
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@androidx.annotation.RequiresPermission(allOf = [android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION])
 @Composable
 fun AddVehicle(
     navHostController: NavHostController = rememberNavController()
@@ -89,63 +101,41 @@ fun AddVehicle(
         }
     }
 
+    val vehicleViewModel = koinViewModel<AddVehicleViewModel>()
+    val uiState by vehicleViewModel.uiState.collectAsState()
+
+
     val vehicleTypes = stringArrayResource(R.array.vehicle_types)
     val context = LocalContext.current
     var selectedType by remember {
         mutableIntStateOf(0)
     }
-    val latLon = remember { mutableDoubleListOf() }
     var useCurrentLocation by remember { mutableStateOf(false) }
-    val fusedLocationClient: FusedLocationProviderClient = remember {
-        LocationServices.getFusedLocationProviderClient(context)
-    }
-
-    val permissionsState = rememberPermissionState(
-//        listOf(
-//            android.Manifest.permission.ACCESS_FINE_LOCATION,
+    val permissionsState = rememberMultiplePermissionsState(
+        listOf(
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION,
-//        )
+        )
     )
-
-    LaunchedEffect(useCurrentLocation) {
+    LaunchedEffect(uiState) {
         Timber.d("reached")
-        if (permissionsState.status.isGranted) {
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    location?.let {
-                        Timber.d("at $it")
-                        it.latitude.let { lat -> latLon.add(0, lat) }
-                        it.longitude.let { lon -> latLon.add(1, lon) }
-                    }
-                }
-                .addOnFailureListener { e ->
-                    // Handle failure to get location
-                    Timber.d("Failed to get last location: ${e.message}")
-                }
+        if (permissionsState.allPermissionsGranted) {
+            vehicleViewModel.loadMyLocation()
         } else {
             useCurrentLocation = false
-            permissionsState.launchPermissionRequest()
+            permissionsState.launchMultiplePermissionRequest()
 
-        }
-    }
-
-    val locationName by remember {
-        derivedStateOf {
-            if (permissionsState.status.shouldShowRationale) {
-                "grant location permission access"
-            } else {
-                if (useCurrentLocation && latLon.isNotEmpty()) {
-                    context.getLocationName(latLon[0], latLon[1])
-                } else
-                    ""
-            }
         }
     }
 
     var isOptionsVisible by remember { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
-    LaunchedEffect(isOptionsVisible) {
-        if (isOptionsVisible)
+    var action by remember {
+        mutableStateOf<AddVehicleAction?>(null)
+    }
+
+    LaunchedEffect(isOptionsVisible, action) {
+        if (isOptionsVisible || action != null)
             bottomSheetState.show()
         else
             bottomSheetState.hide()
@@ -213,12 +203,10 @@ fun AddVehicle(
                     Box {
 
                         TowCustomInputField(
+                            value = uiState.model,
                             placeholderText = "select",
-                            enabled = false,
                             fieldShape = RoundedCornerShape(48.dp),
-                            modifier = Modifier.clickable {
-                                isServicesDropDownVisible = !isServicesDropDownVisible
-                            },
+                            modifier = Modifier,
                             trailingIcon = {
                                 Icon(
                                     imageVector = icon,
@@ -255,7 +243,8 @@ fun AddVehicle(
                     )
 
                     TowCustomInputField(
-                        placeholderText = "type",
+                        value = uiState.plateNo,
+                        placeholderText = "",
                         fieldShape = RoundedCornerShape(48.dp),
                         modifier = Modifier,
                         trailingIcon = {
@@ -275,13 +264,10 @@ fun AddVehicle(
 
             item {
 
-                var useMine by remember {
-                    mutableStateOf(false)
-                }
 
                 val iconTint by remember {
                     derivedStateOf {
-                        if (useMine)
+                        if (uiState.useMyLocation)
                             Icons.Rounded.Check to Color.Green
                         else
                             Icons.Rounded.CheckBoxOutlineBlank to Color.LightGray
@@ -301,7 +287,7 @@ fun AddVehicle(
                     Surface(
                         color = Color.Transparent,
                         onClick = {
-                            useMine = !useMine
+                            vehicleViewModel.setUseMyLocation(!uiState.useMyLocation)
                         }
                     ) {
                         Row(
@@ -320,7 +306,7 @@ fun AddVehicle(
                                     append("Use current location ")
                                 }
                                 append("\n")
-                                append(if (useMine) locationName else "")
+                                append(if (uiState.useMyLocation) uiState.location.text.toString() else "")
                             })
 
                             Icon(
@@ -332,7 +318,7 @@ fun AddVehicle(
                         }
                     }
 
-                    AnimatedVisibility(!useMine) {
+                    AnimatedVisibility(!uiState.useMyLocation) {
                         Column {
 
                             HorizontalDivider(
@@ -343,10 +329,14 @@ fun AddVehicle(
 
                             Box {
                                 TowCustomInputField(
+                                    value = uiState.location,
                                     placeholderText = "Select",
                                     enabled = false,
                                     fieldShape = RoundedCornerShape(48.dp),
-                                    modifier = Modifier,
+                                    modifier = Modifier
+                                        .clickable {
+                                            action = AddVehicleAction.SelectPlace
+                                        },
                                     trailingIcon = {
                                         Icon(
                                             imageVector = Icons.Rounded.DirectionsCarFilled,
@@ -380,9 +370,10 @@ fun AddVehicle(
                     Box {
 
                         TowCustomInputField(
+                            value = uiState.type,
                             placeholderText = "select",
                             enabled = false,
-                            value = TextFieldState(vehicleTypes[selectedType]),
+//                            value = TextFieldState(vehicleTypes[selectedType]),
                             fieldShape = RoundedCornerShape(48.dp),
                             modifier = Modifier.clickable {
                                 isVehicleTypesVisible = !isVehicleTypesVisible
@@ -402,7 +393,10 @@ fun AddVehicle(
                             vehicleTypes.forEachIndexed { index, type ->
                                 DropdownMenuItem(
                                     text = { Text(text = type) },
-                                    onClick = { selectedType = index }
+                                    onClick = {
+                                        isVehicleTypesVisible = false
+                                        vehicleViewModel.setType(type)
+                                    }
                                 )
                             }
                         }
@@ -419,12 +413,36 @@ fun AddVehicle(
                     text = "Save",
                     modifier = Modifier.wrapContentSize(),
                     buttonShape = RoundedCornerShape(32.dp)
-                ) { }
+                ) {
+                    vehicleViewModel.addVehicle(
+                        Vehicle(
+                            model = uiState.model.text.toString(),
+                            plateNumber = uiState.plateNo.text.toString(),
+                            location = uiState.location.text.toString()
+                        )
+                    )
+                }
             }
 
 
         }
     }
+
+    if (action != null) {
+        ModalBottomSheet(
+            onDismissRequest = { action = null },
+            sheetState = bottomSheetState
+        ) {
+
+            when (action) {
+                AddVehicleAction.SelectPlace -> Unit
+                null -> Unit
+            }
+
+
+        }
+    }
+
 
 }
 
@@ -433,6 +451,6 @@ fun AddVehicle(
 @Composable
 private fun AddVehiclePrev() {
     App {
-        AddVehicle()
+//        AddVehicle()
     }
 }
