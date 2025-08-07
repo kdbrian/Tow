@@ -83,7 +83,6 @@ fun Landing(
 
     val firebaseAuth = koinInject<FirebaseAuth>()
     val activity = context as Activity
-    val authViewModel = koinViewModel<AuthViewModel>(parameters = { parametersOf(activity) })
     val landingScreenModel = koinViewModel<LandingScreenModel>()
     val uiState by landingScreenModel.state.collectAsState()
 

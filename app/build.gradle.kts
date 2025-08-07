@@ -18,6 +18,7 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     alias(libs.plugins.google.gms.google.services)
     kotlin("plugin.serialization") version "2.2.0"
+    id("com.google.devtools.ksp")
 
 }
 
@@ -147,5 +148,18 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.places)
+
+
+    val room_version = "2.7.2"
+
+    implementation("androidx.room:room-runtime:$room_version")
+
+    // If this project only uses Java source, use the Java annotationProcessor
+    // No additional plugins are necessary
+    ksp("androidx.room:room-compiler:$room_version")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
 
 }
