@@ -7,6 +7,7 @@ val landingModules = module {
 
     single {
         LandingScreenModel(
+            authRepo = get(),
             firebaseAuth = get(),
             vehicleService = get()
         )

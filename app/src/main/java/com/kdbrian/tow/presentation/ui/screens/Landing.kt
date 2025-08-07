@@ -229,7 +229,7 @@ fun Landing(
             sheetState = bottomSheetState
         ) {
             LoginAction(
-                authViewModel = authViewModel,
+                landingScreenModel = landingScreenModel,
                 onDismiss = { createAccountVisible = false },
             )
 
