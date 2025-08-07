@@ -56,7 +56,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kdbrian.tow.LocalFontFamily
-import com.kdbrian.tow.presentation.ui.state.AuthViewModel
+import com.kdbrian.tow.presentation.ui.state.LandingScreenModel
 import com.kdbrian.tow.presentation.ui.theme.appSecondaryColor
 import com.kdbrian.tow.util.Constants
 import com.kdbrian.tow.util.Resource
@@ -76,7 +76,7 @@ import timber.log.Timber
 @Composable
 fun LoginAction(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel,
+    landingScreenModel: LandingScreenModel,
     onDismiss: () -> Unit = {},
 ) {
     val pagerState = rememberPagerState { 4 }
@@ -85,10 +85,10 @@ fun LoginAction(
     ) {
         when (it) {
             0 -> Prompt(state = pagerState)
-            1 -> SignInScreen(pagerState = pagerState, authViewModel = authViewModel)
+            1 -> SignInScreen(pagerState = pagerState, landingScreenModel = landingScreenModel)
             2 -> OtpVerificationScreen(
                 pagerState = pagerState,
-                authViewModel = authViewModel,
+                landingScreenModel = landingScreenModel,
                 onDismiss = onDismiss
             )
         }
@@ -121,7 +121,7 @@ private fun Prompt(
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.padding(8.dp)
-        ){
+        ) {
 
             Icon(
                 imageVector = Icons.Rounded.Info,
@@ -183,12 +183,13 @@ private fun Prompt(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SignInScreen(
-    authViewModel: AuthViewModel, pagerState: PagerState
+    landingScreenModel: LandingScreenModel,
+    pagerState: PagerState
 ) {
 
     val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
-    val loginState by authViewModel.loginState.collectAsState()
+    val loginState by landingScreenModel.state.collectAsState()
     val phone = rememberTextFieldState()
     val snackbarHost = remember { SnackbarHostState() }
 
@@ -309,7 +310,7 @@ private fun SignInScreen(
                         Button(
                             onClick = {
 //                                if (matches) {
-                                authViewModel.startPhoneLogin(
+                                landingScreenModel.startPhoneLogin(
                                     phone = input
                                 )
 //                                }
@@ -365,12 +366,12 @@ private fun SignInScreen(
 @Composable
 fun OtpVerificationScreen(
     pagerState: PagerState,
-    authViewModel: AuthViewModel,
+    landingScreenModel: LandingScreenModel,
     onDismiss: () -> Unit = {}
 ) {
 
     // State to hold the OTP digits
-    val verificationState by authViewModel.codeVerificationState.collectAsState()
+    val verificationState by landingScreenModel.codeVerificationState.collectAsState()
     val code = rememberTextFieldState()
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
@@ -468,7 +469,7 @@ fun OtpVerificationScreen(
                         Button(
                             onClick = {
                                 if (code.text.isNotEmpty()) {
-                                    authViewModel.verifyCode(
+                                    landingScreenModel.verifyCode(
                                         code.text.trim().toString()
                                     )
                                 }

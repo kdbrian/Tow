@@ -1,6 +1,7 @@
 package com.kdbrian.tow.data.remote.impl
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kdbrian.tow.domain.model.Vehicle
 import com.kdbrian.tow.domain.repo.VehicleRepo
@@ -11,6 +12,21 @@ class VehicleRepoImpl(
     private val firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth
 ) : VehicleRepo() {
+
+    override suspend fun count(uid: String): Result<Long> {
+        return try {
+            val aggregateQuery = firestore
+                .collection("$collection/$uid/mine")//user's
+                .count()
+                .get(AggregateSource.SERVER)
+                .await()
+
+            Result.success(aggregateQuery.count)
+        } catch (e: Exception) {
+            Timber.e("Failed to save vehicle. ${e.message}")
+            Result.failure(e)
+        }
+    }
 
     override suspend fun loadModels(): Result<List<Vehicle>> {
         return Result.success(emptyList())

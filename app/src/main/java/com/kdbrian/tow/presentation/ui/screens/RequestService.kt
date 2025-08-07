@@ -84,6 +84,7 @@ import com.kdbrian.tow.presentation.ui.components.TimeOption
 import com.kdbrian.tow.presentation.ui.components.TimeSelectionSection
 import com.kdbrian.tow.presentation.ui.components.TowCustomInputField
 import com.kdbrian.tow.presentation.ui.components.CustomArrowButton
+import com.kdbrian.tow.presentation.ui.components.PlaceSelectForm
 import com.kdbrian.tow.util.getFileName
 import kotlinx.serialization.Serializable
 
@@ -143,12 +144,12 @@ fun RequestService(
     }
 
     var isServicesDropDownVisible by remember { mutableStateOf(false) }
-    val currentAction by remember {
+    var currentAction by remember {
         mutableStateOf<RequestServiceAction?>(null)
     }
 
-    LaunchedEffect(isOptionsVisible, isServicesDropDownVisible) {
-        if (isOptionsVisible || isServicesDropDownVisible)
+    LaunchedEffect(isOptionsVisible, currentAction, isServicesDropDownVisible) {
+        if (isOptionsVisible || isServicesDropDownVisible || currentAction != null)
             bottomSheetState.show()
         else
             bottomSheetState.hide()
@@ -364,7 +365,11 @@ fun RequestService(
                                     placeholderText = "Select from map",
                                     enabled = false,
                                     fieldShape = RoundedCornerShape(48.dp),
-                                    modifier = Modifier,
+                                    modifier = Modifier
+                                        .clickable {
+                                            isServicesDropDownVisible = !isServicesDropDownVisible
+                                            currentAction = RequestServiceAction.SelectLocation
+                                        },
                                     trailingIcon = {
                                         Icon(
                                             imageVector = Icons.Rounded.DirectionsCarFilled,
@@ -531,12 +536,17 @@ fun RequestService(
     if (isOptionsVisible || isServicesDropDownVisible) {
 
         ModalBottomSheet(
-            onDismissRequest = { isOptionsVisible = false },
+            onDismissRequest = {
+                isOptionsVisible = false
+                isServicesDropDownVisible = false
+                currentAction = null
+
+            },
             sheetState = bottomSheetState,
             containerColor = LocalAppColor.current,
             contentColor = Color.Black
         ) {
-            if (isOptionsVisible){
+            if (isOptionsVisible) {
                 Column(
                     modifier = Modifier.padding(8.dp)
                 ) {
@@ -557,7 +567,10 @@ fun RequestService(
                             .fillMaxWidth()
                             .height(150.dp)
                             .padding(12.dp)
-                            .background(color = Color(0xFFFF0101), shape = RoundedCornerShape(24.dp))
+                            .background(
+                                color = Color(0xFFFF0101),
+                                shape = RoundedCornerShape(24.dp)
+                            )
                             .background(
                                 brush = Brush.linearGradient(
                                     colors = listOf(
@@ -589,16 +602,12 @@ fun RequestService(
                         )
                     }
                 }
-            }else{
-                currentAction?.let {action ->
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                    ){
-                        when(action){
-                            RequestServiceAction.SelectLocation -> Unit
-                            RequestServiceAction.SelectService -> Unit
-                            RequestServiceAction.SelectVehicle -> SelectVehicle()
-                        }
+            } else {
+                currentAction?.let { action ->
+                    when (action) {
+                        RequestServiceAction.SelectLocation -> PlaceSelectForm()
+                        RequestServiceAction.SelectService -> Unit
+                        RequestServiceAction.SelectVehicle -> SelectVehicle()
                     }
                 }
             }
@@ -606,7 +615,6 @@ fun RequestService(
 
 
     }
-
 
 
 }

@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -160,25 +162,40 @@ fun Profile(
             androidx.compose.material3.SnackbarHost(hostState = snackbarHostState)
         },
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = LocalAppColor.current,
-                    navigationIconContentColor = Color.Black,
-                    titleContentColor = Color.Black
-                ),
-                title = {},
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navHostController.popBackStack()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Close,
-                            contentDescription = null,
-                            tint = Color.Black
+            Surface(
+                shadowElevation = 4.dp
+            ){
+                CenterAlignedTopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = LocalAppColor.current,
+                        navigationIconContentColor = Color.Black,
+                        titleContentColor = Color.Black
+                    ),
+                    title = {
+                        Text(
+                            text = "Profile",
+                            style = MaterialTheme.typography.displayMedium.copy(
+                                fontSize = 20.sp,
+                                fontFamily = LocalFontFamily.current,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier
+//                                .padding(16.dp)
                         )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navHostController.popBackStack()
+                        }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Close,
+                                contentDescription = null,
+                                tint = Color.Black
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         containerColor = LocalAppColor.current
     ) { pd ->
@@ -195,15 +212,6 @@ fun Profile(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(
-                text = "Profile",
-                style = MaterialTheme.typography.displayMedium.copy(
-                    fontSize = 20.sp,
-                    fontFamily = LocalFontFamily.current,
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier.padding(16.dp)
-            )
 
             Box(
                 modifier = Modifier

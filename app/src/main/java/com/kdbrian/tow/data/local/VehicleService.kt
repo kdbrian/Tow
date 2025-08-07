@@ -8,6 +8,7 @@ interface VehicleService {
     val collection: String
         get() = "${BuildConfig.APPLICATION_ID}:vehicles"
 
+    suspend fun count(uid: String): Result<Long>
     suspend fun loadModels(): Result<List<Vehicle>>
     suspend fun saveVehicle(vehicle: Vehicle): Result<String>
     suspend fun loadSavedVehicles(): Result<List<Vehicle>>

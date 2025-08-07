@@ -52,16 +52,26 @@ android {
             dimension = "env"
             val envValue = getSecret("ENV") ?: "dev"
             buildConfigField("String", "ENV", "\"$envValue\"")
+
+            val placesApiKey = getSecret("placesApiKey") ?: "dev"
+            buildConfigField("String", "placesApiKey", "\"$placesApiKey\"")
         }
         create("staging") {
             dimension = "env"
             val envValue = getSecret("ENV") ?: "staging"
             buildConfigField("String", "ENV", "\"$envValue\"")
+
+            val placesApiKey = getSecret("placesApiKey") ?: "staging"
+            buildConfigField("String", "placesApiKey", "\"$placesApiKey\"")
         }
         create("prod") {
             dimension = "env"
+
             val envValue = getSecret("ENV") ?: "prod"
             buildConfigField("String", "ENV", "\"$envValue\"")
+
+            val placesApiKey = getSecret("placesApiKey") ?: "prod"
+            buildConfigField("String", "placesApiKey", "\"$placesApiKey\"")
         }
     }
 
@@ -136,8 +146,6 @@ dependencies {
 //    implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
 
-
-//    implementation(libs.moshi)
-//    implementation(libs.moshi.kotlin)
+    implementation(libs.places)
 
 }

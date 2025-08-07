@@ -47,6 +47,7 @@ import com.kdbrian.tow.LocalFontFamily
 fun TowCustomInputField(
     modifier: Modifier = Modifier,
     value: TextFieldState = rememberTextFieldState(),
+    onValueUpdate: (String) -> Unit = value::setTextAndPlaceCursorAtEnd,
     placeholderText: String = LoremIpsum(2).values.joinToString(),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -70,7 +71,7 @@ fun TowCustomInputField(
 ) {
     TextField(
         value = value.text.toString(),
-        onValueChange = value::setTextAndPlaceCursorAtEnd,
+        onValueChange = onValueUpdate,
         placeholder = {
             Text(
                 text = placeholderText,
@@ -85,8 +86,7 @@ fun TowCustomInputField(
         keyboardActions = keyboardActions,
         textStyle = MaterialTheme.typography.titleSmall.copy(fontFamily = LocalFontFamily.current),
         modifier = modifier
-            .fillMaxWidth()
-        ,
+            .fillMaxWidth(),
         enabled = enabled,
         shape = fieldShape,
         colors = fieldColors,

@@ -19,6 +19,7 @@ junitJupiter = "5.8.1"
 junitJunit = "4.12"
 materialIconsExtended = "1.7.8"
 navigationCompose = "2.9.2"
+places = "4.4.1"
 playServicesAuth = "21.4.0"
 playServicesLocation = "21.3.0"
 timber = "5.0.1"
@@ -57,6 +58,7 @@ junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.r
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "version" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "version" }
+places = { module = "com.google.android.libraries.places:places", version.ref = "places" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }

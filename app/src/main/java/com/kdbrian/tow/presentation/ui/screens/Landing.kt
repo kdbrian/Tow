@@ -1,6 +1,8 @@
 package com.kdbrian.tow.presentation.ui.screens
 
 import android.app.Activity
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +15,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -21,8 +26,10 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,7 +64,7 @@ import com.kdbrian.tow.presentation.ui.components.CustomArrowButton
 import com.kdbrian.tow.presentation.ui.components.LoginAction
 import com.kdbrian.tow.presentation.ui.components.MapCard
 import com.kdbrian.tow.presentation.ui.components.ServiceCard
-import com.kdbrian.tow.presentation.ui.state.AuthViewModel
+import com.kdbrian.tow.presentation.ui.state.LandingScreenModel
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -77,11 +84,13 @@ fun Landing(
     val firebaseAuth = koinInject<FirebaseAuth>()
     val activity = context as Activity
     val authViewModel = koinViewModel<AuthViewModel>(parameters = { parametersOf(activity) })
+    val landingScreenModel = koinViewModel<LandingScreenModel>()
+    val uiState by landingScreenModel.state.collectAsState()
 
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = LocalAppColor.current
+        containerColor = LocalAppColor.current,
     ) { pd ->
         val scrollState = rememberScrollState()
         Column(
@@ -123,7 +132,7 @@ fun Landing(
 
                 Surface(
                     onClick = {
-                        if (firebaseAuth.currentUser == null) {
+                        if (uiState.data?.isAuthenticated != true) {
                             createAccountVisible = true
                         } else {
                             navHostController.navigate(ProfileRoute)
@@ -164,20 +173,42 @@ fun Landing(
                 navHostController.navigate(RequestServiceRoute)
             }
 
-            MapCard(
-                mapImagePainter = painterResource(R.drawable.geographical_map),
-                locationText = LoremIpsum(2).values.joinToString(),
-                searchRadius = 3.toString()
-            )
+            AnimatedVisibility(false) {
+                MapCard(
+                    mapImagePainter = painterResource(R.drawable.geographical_map),
+                    locationText = LoremIpsum(2).values.joinToString(),
+                    searchRadius = 3.toString()
+                )
+            }
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 CustomArrowButton(
-                    text = "Request history",
+                    text = "Activity",
+                    icon = Icons.Rounded.Schedule
                 ) { navHostController.navigate(RequestHistoryRoute) }
 
-                CustomArrowButton(text = "My Cars") { navHostController.navigate(MyVehiclesRoute) }
+                AnimatedContent((uiState.data?.numberOfVehicles ?: -1) > 0) {
+                    if (it) {
+                        CustomArrowButton(
+                            text = "My Cars",
+                            icon = Icons.Rounded.DirectionsCar
+                        ) { navHostController.navigate(MyVehiclesRoute) }
+                    } else {
+                        ServiceCard(
+                            backgroundImagePainter = painterResource(R.drawable.cars),
+                            title = "Add Vehicles",
+                            supportText = buildAnnotatedString {
+                                append("Keep track of your ownership game.")
+                            }
+                        ) {
+                            navHostController.navigate(MyVehiclesRoute)
+                        }
+                    }
+                }
+
+
             }
 
             ServiceCard(
